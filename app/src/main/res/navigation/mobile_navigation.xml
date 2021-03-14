@@ -3,23 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/drawer_home">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/drawer_home"
         android:name="com.example.musclenerds.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/drawer_workouts"
         android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/menu_workouts"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.musclenerds.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/drawer_exercises"
+        android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
+        android:label="@string/menu_exercises"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/drawer_tracking"
+        android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
+        android:label="@string/menu_tracking"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/drawer_hr_monitor"
+        android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
+        android:label="@string/menu_hr_monitoring"
+        tools:layout="@layout/fragment_gallery" />
 </navigation>
