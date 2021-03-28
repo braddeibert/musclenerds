@@ -42,8 +42,8 @@
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/drawer_hr_monitor"
+        android:id="@+id/drawer_history"
         android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
-        android:label="@string/menu_hr_monitoring"
+        android:label="@string/menu_history"
         tools:layout="@layout/fragment_gallery" />
 </navigation>

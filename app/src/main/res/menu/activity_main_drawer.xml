@@ -18,7 +18,7 @@
             android:id="@+id/drawer_tracking"
             android:title="@string/menu_tracking" />
         <item
-            android:id="@+id/drawer_hr_monitor"
-            android:title="@string/menu_hr_monitoring" />
+            android:id="@+id/drawer_history"
+            android:title="@string/menu_history" />
     </group>
 </menu>
