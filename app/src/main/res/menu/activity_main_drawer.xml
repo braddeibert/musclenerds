@@ -16,6 +16,7 @@
             android:title="@string/menu_exercises" />
         <item
             android:id="@+id/drawer_tracking"
+            android:icon="@drawable/ic_fitness"
             android:title="@string/menu_tracking" />
         <item
             android:id="@+id/drawer_hr_monitor"

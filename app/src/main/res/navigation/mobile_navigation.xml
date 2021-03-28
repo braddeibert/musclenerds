@@ -11,6 +11,12 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
+    <activity
+        android:id="@+id/drawer_tracking"
+        android:name="com.example.musclenerds.WorkoutTracking"
+        android:label="@string/menu_tracking"
+        tools:layout="@layout/activity_workout_tracking" />
+
     <fragment
         android:id="@+id/drawer_workouts"
         android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
@@ -22,13 +28,6 @@
         android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
         android:label="@string/menu_exercises"
         tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/drawer_tracking"
-        android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
-        android:label="@string/menu_tracking"
-        tools:layout="@layout/fragment_gallery" />
-
     <fragment
         android:id="@+id/drawer_hr_monitor"
         android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
