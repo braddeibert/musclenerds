@@ -11,15 +11,6 @@ public class MotivationalQuoteDisplay {
     Random random = new Random();
     TextView textQuot;
 
-    // @Override
-    //protected void onCreate(Bundle savedInstanceState){
-        //super.onCreate(savedInstanceState);
-        // setContentView(R.layout.activity_main);
-
-        //textQuot = findViewById(R.id.textViewNextQuote);
-
-
-
 
     public void displayQuote(){
         //Picks random quote between quote 1-20
