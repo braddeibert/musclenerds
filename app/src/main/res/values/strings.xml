@@ -1,13 +1,23 @@
 <resources>
-    <string name="app_name">musclenerds</string>
+    <string name="app_name">MuscleNerds</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">*Username here*</string>
+    <string name="nav_header_subtitle">Date: *todays date*</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <!-- NAVIGATION DRAWER ITEMS -->
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_workouts">Workout Catalog</string>
+    <string name="menu_exercises">Exercise Library</string>
+    <string name="menu_tracking">Track Workout</string>
+    <string name="menu_hr_monitoring">Heart Rate Monitoring</string>
+
+    <string name="home_greeting">Welcome, *username*!</string>
+
+    <!-- WIDGET LABEL CONTENT -->
+    <string name="wotd_label">Workout of the Day</string>
+    <string name="last_workout_label">Last Workout Highlights</string>
+
 </resources>
