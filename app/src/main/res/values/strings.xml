@@ -13,13 +13,14 @@
     <string name="menu_workouts">Workout Catalog</string>
     <string name="menu_exercises">Exercise Library</string>
     <string name="menu_tracking">Track Workout</string>
-    <string name="menu_hr_monitoring">Heart Rate Monitoring</string>
+    <string name="menu_history">Workout History</string>
 
     <string name="home_greeting">Welcome, *username*!</string>
 
-    <!-- WIDGET LABEL CONTENT -->
+    <!-- FRAGMENT LABEL CONTENT -->
     <string name="wotd_label">Workout of the Day</string>
     <string name="last_workout_label">Last Workout Highlights</string>
+    <string name="okay">Okay</string>
 
     <string name="weight">weight</string>
     <string name="reps">reps</string>

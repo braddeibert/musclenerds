@@ -9,10 +9,8 @@ import android.view.Menu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.musclenerds.database.AppDatabase;
 import com.example.musclenerds.database.AppExecutors;
-import com.example.musclenerds.database.MotivationalQuoteDAO;
 import com.example.musclenerds.model.Exercise;
 import com.example.musclenerds.model.MotivationalQuote;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.drawer_home, R.id.drawer_workouts, R.id.drawer_exercises, R.id.drawer_tracking, R.id.drawer_hr_monitor)
+                R.id.drawer_home, R.id.drawer_workouts, R.id.drawer_exercises, R.id.drawer_tracking, R.id.drawer_history)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);

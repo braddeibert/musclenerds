@@ -25,12 +25,31 @@
 
     <fragment
         android:id="@+id/drawer_exercises"
-        android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
+        android:name="com.example.musclenerds.ui.exerciseview.exercise_view"
         android:label="@string/menu_exercises"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/exercise_view_fragment" >
+
+        <action
+            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            app:destination="@id/IndividualExercise" />
+
+    </fragment>
+
     <fragment
-        android:id="@+id/drawer_hr_monitor"
+        android:id="@+id/IndividualExercise"
+        android:name="com.example.musclenerds.ui.exerciseview.IndividualExercise"
+        android:label="Exercises"
+        tools:layout="@layout/exercise_fragment"/>
+
+    <fragment
+        android:id="@+id/drawer_tracking"
         android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
-        android:label="@string/menu_hr_monitoring"
+        android:label="@string/menu_tracking"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/drawer_history"
+        android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
+        android:label="@string/menu_history"
         tools:layout="@layout/fragment_gallery" />
 </navigation>
