@@ -24,6 +24,6 @@ public interface WorkoutExerciseDAO {
     @Delete
     void delete(WorkoutExercise exercise);
 
-    @Query("SELECT * FROM TRACKEDSET WHERE id = :id")
+    @Query("SELECT * FROM WORKOUTEXERCISE WHERE id = :id")
     WorkoutExercise findById(int id);
 }
