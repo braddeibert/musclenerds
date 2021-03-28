@@ -18,7 +18,7 @@ import java.util.List;
 @Dao
 public interface WorkoutDAO {
     @Query("SELECT * FROM WORKOUT ORDER BY ID")
-    List<Workout> getAllQuotes();
+    List<Workout> getAllWorkouts();
 
     @Insert
     void insertWorkout(Workout workout);
