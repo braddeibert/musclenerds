@@ -13,13 +13,13 @@ import java.util.List;
 @Dao
 public interface TrackedWorkoutDAO {
     @Query("SELECT * FROM TRACKEDWORKOUT ORDER BY ID")
-    List<TrackedWorkout> getAllTrackedWorkouts();
+    List<TrackedWorkout> getAll();
 
     @Insert
-    void insertTrackedWorkout(TrackedWorkout workout);
+    void insert(TrackedWorkout workout);
 
     @Update
-    void updateTrackedWorkout(TrackedWorkout workout);
+    void update(TrackedWorkout workout);
 
     @Delete
     void delete(TrackedWorkout workout);

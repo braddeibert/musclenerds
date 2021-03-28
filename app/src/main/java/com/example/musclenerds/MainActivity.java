@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                List<MotivationalQuote> quotes = mDb.quoteDao().getAllQuotes(); //get all quotes.
+                List<MotivationalQuote> quotes = mDb.quoteDao().getAll(); //get all quotes.
                 int index = rand.nextInt(quotes.size());
                 Snackbar.make(view, "' " + quotes.get(index).getText() + "' --" + quotes.get(index).getAuthor(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -104,19 +104,19 @@ public class MainActivity extends AppCompatActivity {
     // Following functions are for generating static data in the database.
     public void generateQuotes() {
         MotivationalQuote newQuote = new MotivationalQuote("Today I will do what others won’t, so tomorrow I can accomplish what others can’t.", "Jerry Rice");
-        mDb.quoteDao().insertQuote(newQuote); // insert a quote.
+        mDb.quoteDao().insert(newQuote); // insert a quote.
 
         newQuote = new MotivationalQuote("Do something today that your future self will thank you for.", "Unknown");
-        mDb.quoteDao().insertQuote(newQuote); // insert a quote.
+        mDb.quoteDao().insert(newQuote); // insert a quote.
 
         newQuote = new MotivationalQuote("We are what we repeatedly do. Excellence then is not an act but a habit.", "Aristotle");
-        mDb.quoteDao().insertQuote(newQuote); // insert a quote.
+        mDb.quoteDao().insert(newQuote); // insert a quote.
 
         newQuote = new MotivationalQuote("No matter how slow you go, you are still lapping everybody on the couch.", "Unknown");
-        mDb.quoteDao().insertQuote(newQuote); // insert a quote.
+        mDb.quoteDao().insert(newQuote); // insert a quote.
 
         newQuote = new MotivationalQuote("Sweat is fat crying.", "Unknown");
-        mDb.quoteDao().insertQuote(newQuote); // insert a quote.
+        mDb.quoteDao().insert(newQuote); // insert a quote.
     }
 
     public void generateExercises() {
@@ -139,8 +139,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshDatabase() {
-        List<MotivationalQuote> quotes = mDb.quoteDao().getAllQuotes();
-        List<Exercise> exercises = mDb.exerciseDAO().getAllExercises();
+        List<MotivationalQuote> quotes = mDb.quoteDao().getAll();
+        List<Exercise> exercises = mDb.exerciseDAO().getAll();
 
         if(quotes.size() > 0)
         for(int i = 0; i < quotes.size(); i++) {
@@ -155,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
         generateQuotes();
         generateExercises();
 
-        quotes = mDb.quoteDao().getAllQuotes();
-        exercises = mDb.exerciseDAO().getAllExercises();
+        quotes = mDb.quoteDao().getAll();
+        exercises = mDb.exerciseDAO().getAll();
 
         Log.d("AppData_LOG", "Fetched " + quotes.size() + " quotes:");
         for(int i = 0; i < quotes.size(); i++) {

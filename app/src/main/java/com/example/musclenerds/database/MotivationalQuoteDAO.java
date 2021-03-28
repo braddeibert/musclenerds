@@ -19,13 +19,13 @@ import java.util.List;
 @Dao
 public interface MotivationalQuoteDAO {
     @Query("SELECT * FROM QUOTE ORDER BY ID")
-    List<MotivationalQuote> getAllQuotes();
+    List<MotivationalQuote> getAll();
 
     @Insert
-    void insertQuote(MotivationalQuote quote);
+    void insert(MotivationalQuote quote);
 
     @Update
-    void updateQuote(MotivationalQuote quote);
+    void update(MotivationalQuote quote);
 
     @Delete
     void delete(MotivationalQuote quote);

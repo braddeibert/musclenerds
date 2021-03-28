@@ -13,13 +13,13 @@ import java.util.List;
 @Dao
 public interface TrackedSetDAO {
     @Query("SELECT * FROM TRACKEDSET ORDER BY ID")
-    List<TrackedSet> getAllSets();
+    List<TrackedSet> getAll();
 
     @Insert
-    void insertSet(TrackedSet set);
+    void insert(TrackedSet set);
 
     @Update
-    void updateSet(TrackedSet set);
+    void update(TrackedSet set);
 
     @Delete
     void delete(TrackedSet set);

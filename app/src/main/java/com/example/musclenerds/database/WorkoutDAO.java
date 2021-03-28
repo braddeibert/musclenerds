@@ -18,13 +18,13 @@ import java.util.List;
 @Dao
 public interface WorkoutDAO {
     @Query("SELECT * FROM WORKOUT ORDER BY ID")
-    List<Workout> getAllWorkouts();
+    List<Workout> getAll();
 
     @Insert
-    void insertWorkout(Workout workout);
+    void insert(Workout workout);
 
     @Update
-    void updateWorkout(Workout workout);
+    void update(Workout workout);
 
     @Delete
     void delete(Workout workout);
