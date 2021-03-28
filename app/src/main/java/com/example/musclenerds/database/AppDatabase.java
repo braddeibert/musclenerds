@@ -45,4 +45,9 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract MotivationalQuoteDAO quoteDao(); // the dao is define abstractly.
     public abstract ExerciseDAO exerciseDAO();
+    public abstract TrackedSetDAO trackedSetDAO();
+    public abstract TrackedWorkoutDAO trackedWorkoutDAO();
+    public abstract WorkoutDAO workoutDAO();
+    public abstract WorkoutExerciseDAO workoutExerciseDAO();
+
 }
