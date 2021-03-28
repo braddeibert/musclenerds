@@ -5,8 +5,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.musclenerds.model.MotivationalQuote;
-import com.example.musclenerds.model.Workouts;
+import com.example.musclenerds.model.Workout;
 
 import java.util.List;
 
@@ -17,19 +16,19 @@ import java.util.List;
 //other tags can have things defined, EG: on conflict behavior.
 
 @Dao
-public interface WorkoutsDAO {
-    @Query("SELECT * FROM WORKOUTS ORDER BY ID")
-    List<Workouts> getAllQuotes();
+public interface WorkoutDAO {
+    @Query("SELECT * FROM WORKOUT ORDER BY ID")
+    List<Workout> getAllQuotes();
 
     @Insert
-    void insertWorkout(Workouts workouts);
+    void insertWorkout(Workout workout);
 
     @Update
-    void updateWorkout(Workouts workouts);
+    void updateWorkout(Workout workout);
 
     @Delete
-    void delete(Workouts workouts);
+    void delete(Workout workout);
 
-    @Query("SELECT * FROM WORKOUTS WHERE id = :id")
-    Workouts findById(int id);
+    @Query("SELECT * FROM WORKOUT WHERE id = :id")
+    Workout findById(int id);
 }

@@ -4,8 +4,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "WORKOUTS")
-public class Workouts {
+@Entity(tableName = "WORKOUT")
+public class Workout {
 
     @PrimaryKey(autoGenerate = true)
     int id;
@@ -15,13 +15,13 @@ public class Workouts {
     int Duration;
 
     @Ignore
-    public Workouts(String Name, String Description, String Target_Muscles, int Duration){
+    public Workout(String Name, String Description, String Target_Muscles, int Duration){
         this.Name = Name;
         this.Description = Description;
         this.Target_Muscles = Target_Muscles;
         this.Duration = Duration;
     }
-    public Workouts(int id, String Name, String Description, String Target_Muscles, int Duration){
+    public Workout(int id, String Name, String Description, String Target_Muscles, int Duration){
         this.id = id;
         this.Name = Name;
         this.Description = Description;
