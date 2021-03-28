@@ -19,5 +19,6 @@
     <!-- WIDGET LABEL CONTENT -->
     <string name="wotd_label">Workout of the Day</string>
     <string name="last_workout_label">Last Workout Highlights</string>
+    <string name="okay">Okay</string>
 
 </resources>
