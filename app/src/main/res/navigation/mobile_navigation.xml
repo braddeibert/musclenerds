@@ -42,12 +42,6 @@
         tools:layout="@layout/exercise_fragment"/>
 
     <fragment
-        android:id="@+id/drawer_tracking"
-        android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
-        android:label="@string/menu_tracking"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
         android:id="@+id/drawer_history"
         android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
         android:label="@string/menu_history"

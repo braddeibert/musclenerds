@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
                 //get a random number. used to get a random quote from the above list.
                 int index = rand.nextInt(quotes.size());
                 //set the text of the desired item, quoteView is defined above.
-                quoteView.setText(quotes.get(index).getText());
+                // quoteView.setText(quotes.get(index).getText());
 
                 //then we can get a random workout.
                 //first get a list of all workouts.
@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment {
                     wotdText += "\n- " + exercises.get(i).getReps() + " " + exercises.get(i).getName() + "s";
                 }
 
-                wotd.setText(wotdText);
+                // wotd.setText(wotdText);
             }
         });
         return root;

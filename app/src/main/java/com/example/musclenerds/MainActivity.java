@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         mDb.workoutDAO().insert(newWorkout);
         newWorkout = mDb.workoutDAO().getAll().get(0);
 
-        Exercise newExercise = new Exercise(0,
+        Exercise newExercise = new Exercise(
                 "Sit-Up",
                 "Lie down on your back. bend your legs and stabalize your lower bodey. Cross your hands to opposite shoulders, or place them behind your ears without pulling on your neck. Lift your head and shoulder blades from the ground, Exhale as you rise. Lower, returning to your starting point, exhale as you lower. Repeat.",
                 "abdominal muscles",
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 "none for now");
         mDb.exerciseDAO().insert(newExercise);
 
-        newExercise = new Exercise(1,
+        newExercise = new Exercise(
                 "Push-Up",
                 "Get down on all fours, placing your hands slightly wider than your shoulders. Straighten your arms and legs. Lower your body until your chest nearly touches the floor. Pause, then push yourself back up. Repeat.",
                 "triceps",
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 "none for now");
         mDb.exerciseDAO().insert(newExercise);
 
-        newExercise = new Exercise(2,
+        newExercise = new Exercise(
                 "Squats",
                 "",
                 "Legs",
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 "none for now");
         mDb.exerciseDAO().insert(newExercise);
 
-        newExercise = new Exercise(3,
+        newExercise = new Exercise(
                 "Lunges",
                 "",
                 "Legs",
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 "none for now");
         mDb.exerciseDAO().insert(newExercise);
 
-        newExercise = new Exercise(4,
+        newExercise = new Exercise(
                 "Plank",
                 "",
                 "abs",
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 "none for now");
         mDb.exerciseDAO().insert(newExercise);
 
-        newExercise = new Exercise(5,
+        newExercise = new Exercise(
                 "Jumping Jacks",
                 "",
                 "",
