@@ -17,17 +17,25 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.musclenerds.R;
+import com.example.musclenerds.database.AppDatabase;
+import com.example.musclenerds.database.AppExecutors;
+import com.example.musclenerds.model.MotivationalQuote;
 import com.example.musclenerds.ui.Adapters.ExerciseAdapter;
 import com.example.musclenerds.ui.Adapters.MuscleGroupAdapter;
 import com.example.musclenerds.ui.models.Exercise;
 import com.example.musclenerds.ui.models.MuscleGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class exercise_view extends Fragment {
 
+    private AppDatabase mDb; //create the database var.
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        mDb = AppDatabase.getInstance(getContext()); // tell the database to create itself.
 
         View view = inflater.inflate(R.layout.exercise_view_fragment, container, false);
 
@@ -50,6 +58,15 @@ public class exercise_view extends Fragment {
 
     private ArrayList<MuscleGroup> prepareData() {
 
+        // create a background thread.
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                // create a list of exercises.
+                // Use the type of Exercise defined in the database though.
+                //List<Exercise> exercises = mDb.exerciseDAO().getAll();
+            }
+        });
         //New data
         ArrayList<MuscleGroup> muscles = new ArrayList<MuscleGroup>();
 
