@@ -26,4 +26,7 @@ public interface WorkoutExerciseDAO {
 
     @Query("SELECT * FROM WORKOUTEXERCISE WHERE id = :id")
     WorkoutExercise findById(int id);
+
+    @Query("SELECT * FROM WORKOUTEXERCISE WHERE W_ID = :W_ID")
+    List<WorkoutExercise> findByW_ID(int W_ID);
 }
