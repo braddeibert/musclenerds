@@ -1,6 +1,8 @@
 package com.example.musclenerds.ui.home;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +57,15 @@ public class HomeFragment extends Fragment {
                 //get a random number. used to get a random quote from the above list.
                 int index = rand.nextInt(quotes.size());
                 //set the text of the desired item, quoteView is defined above.
-                // quoteView.setText(quotes.get(index).getText());
+                 //quoteView.setText(quotes.get(index).getText());
+
+                final String fq = quotes.get(index).getText();
+                new Handler(Looper.getMainLooper()).post(new Runnable(){
+                    @Override
+                    public void run() {
+                        quoteView.setText(fq);
+                    }
+                });
 
                 //then we can get a random workout.
                 //first get a list of all workouts.
@@ -77,7 +87,15 @@ public class HomeFragment extends Fragment {
                     wotdText += "\n- " + exercises.get(i).getReps() + " " + exercises.get(i).getName() + "s";
                 }
 
-                // wotd.setText(wotdText);
+                final String fw = wotdText;
+
+
+                new Handler(Looper.getMainLooper()).post(new Runnable(){
+                    @Override
+                    public void run() {
+                        wotd.setText(fw);
+                    }
+                });
             }
         });
         return root;
