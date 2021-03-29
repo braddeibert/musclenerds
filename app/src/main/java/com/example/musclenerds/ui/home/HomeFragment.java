@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
 
                 //then we can get a random workout.
                 //first get a list of all workouts.
-                List<Workout> allWorkouts = mDb.workoutDAO().getAll();
+                /*List<Workout> allWorkouts = mDb.workoutDAO().getAll();
                 //get a new random number.
                 index = rand.nextInt(allWorkouts.size() - 1);
                 //create a list of workout id numbers by getting all workoutExercise items with the matching w_id from the randomly selected workout.
@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment {
                     wotdText += "\n- " + exercises.get(i).getReps() + " " + exercises.get(i).getName() + "s";
                 }
 
-                wotd.setText(wotdText);
+                wotd.setText(wotdText);*/
             }
         });
         return root;
