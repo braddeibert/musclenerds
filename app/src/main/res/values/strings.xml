@@ -1,14 +1,46 @@
 <resources>
-    <string name="app_name">musclenerds</string>
+    <string name="app_name">MuscleNerds</string>
+    <string name="title_activity_workout_tracking">Workout Tracking</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">*Username here*</string>
+    <string name="nav_header_subtitle">Date: *todays date*</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <!-- NAVIGATION DRAWER ITEMS -->
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="button_view_workout">ViewWorkout</string>
+    <string name="menu_workouts">Workout Catalog</string>
+    <string name="menu_exercises">Exercise Library</string>
+    <string name="menu_tracking">Track Workout</string>
+    <string name="menu_history">Workout History</string>
+
+    <string name="home_greeting">Welcome, *username*!</string>
+
+    <!-- FRAGMENT LABEL CONTENT -->
+    <string name="wotd_label">Workout of the Day</string>
+    <string name="last_workout_label">Last Workout Highlights</string>
+    <string name="okay">Okay</string>
+
+    <string name="weight">weight</string>
+    <string name="reps">reps</string>
+
+    <!-- Weight Dialog Strings -->
+    <string name="w_45">+45</string>
+    <string name="w_35">+35</string>
+    <string name="w_25">+25</string>
+    <string name="w_10">+10</string>
+    <string name="w_5">+5</string>
+    <string name="enter_weight">Weight:</string>
+    <string name="weightDialogButton">Enter Weight</string>
+    <string name="weight_info">%1$s lbs</string>
+
+    <!-- Reps Dialog Strings -->
+    <string name="r_1">+1</string>
+    <string name="r_5">+5</string>
+    <string name="r_10">+10</string>
+    <string name="r_20">+20</string>
+    <string name="enter_reps">Reps:</string>
+    <string name="repsDialogButton">Enter Reps</string>
+    <string name="reps_info">%1$s reps</string>
 </resources>

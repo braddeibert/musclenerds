@@ -10,15 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Musclenerds">
         <activity
+            android:name=".WorkoutTracking"
+            android:label="@string/title_activity_workout_tracking"
+            android:theme="@style/Theme.Musclenerds.NoActionBar"></activity>
+        <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.Musclenerds.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
