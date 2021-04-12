@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.Menu;
 
 
+import com.example.musclenerds.model.Workout;
+import com.example.musclenerds.model.WorkoutExercise;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.musclenerds.database.AppDatabase;
 import com.example.musclenerds.database.AppExecutors;
-import com.example.musclenerds.database.MotivationalQuoteDAO;
 import com.example.musclenerds.model.Exercise;
 import com.example.musclenerds.model.MotivationalQuote;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.drawer_home, R.id.drawer_workouts, R.id.drawer_exercises, R.id.drawer_tracking, R.id.drawer_hr_monitor)
+                R.id.drawer_home, R.id.drawer_workouts, R.id.drawer_exercises, R.id.drawer_tracking, R.id.drawer_history)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -117,7 +117,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void generateExercises() {
-        Exercise newExercise = new Exercise("Sit-Up",
+        Workout newWorkout = new Workout("Beginner Bodyweight Workout", "An easy workout for beginners using only bodyweight", "Full Body", 20);
+        mDb.workoutDAO().insert(newWorkout);
+        newWorkout = new Workout("20 minute workout", "A quick workout for people with limited time.", "Full Body", 20);
+        mDb.workoutDAO().insert(newWorkout);
+        newWorkout = mDb.workoutDAO().getAll().get(0);
+
+        Exercise newExercise = new Exercise(
+                "Sit-Up",
                 "Lie down on your back. bend your legs and stabalize your lower bodey. Cross your hands to opposite shoulders, or place them behind your ears without pulling on your neck. Lift your head and shoulder blades from the ground, Exhale as you rise. Lower, returning to your starting point, exhale as you lower. Repeat.",
                 "abdominal muscles",
                 4,
@@ -125,7 +132,9 @@ public class MainActivity extends AppCompatActivity {
                 "none",
                 "none for now");
         mDb.exerciseDAO().insert(newExercise);
-        newExercise = new Exercise("Push-Up",
+
+        newExercise = new Exercise(
+                "Push-Up",
                 "Get down on all fours, placing your hands slightly wider than your shoulders. Straighten your arms and legs. Lower your body until your chest nearly touches the floor. Pause, then push yourself back up. Repeat.",
                 "triceps",
                 4,
@@ -133,11 +142,63 @@ public class MainActivity extends AppCompatActivity {
                 "none",
                 "none for now");
         mDb.exerciseDAO().insert(newExercise);
+
+        newExercise = new Exercise(
+                "Squats",
+                "",
+                "Legs",
+                20,
+                1,
+                "none",
+                "none for now");
+        mDb.exerciseDAO().insert(newExercise);
+
+        newExercise = new Exercise(
+                "Lunges",
+                "",
+                "Legs",
+                20,
+                1,
+                "none",
+                "none for now");
+        mDb.exerciseDAO().insert(newExercise);
+
+        newExercise = new Exercise(
+                "Plank",
+                "",
+                "abs",
+                15,
+                0,
+                "none",
+                "none for now");
+        mDb.exerciseDAO().insert(newExercise);
+
+        newExercise = new Exercise(
+                "Jumping Jacks",
+                "",
+                "",
+                30,
+                1,
+                "none",
+                "none for now");
+        mDb.exerciseDAO().insert(newExercise);
+
+        // let's get a list of all workouts on the database so far.
+        // then we can iterate through the list and link each exercise to the workout we created earlier.
+        // these links are represented as entities in the WorkoutExercise table.
+        List<Exercise> allExercises = mDb.exerciseDAO().getAll();
+        for(int i = 0; i < allExercises.size(); i++) {
+            WorkoutExercise newWorkoutExercise = new WorkoutExercise(newWorkout.getId(), allExercises.get(i).getId());
+            mDb.workoutExerciseDAO().insert(newWorkoutExercise);
+        }
+
     }
 
     public void refreshDatabase() {
         List<MotivationalQuote> quotes = mDb.quoteDao().getAll();
         List<Exercise> exercises = mDb.exerciseDAO().getAll();
+        List<Workout> workouts = mDb.workoutDAO().getAll();
+        List<WorkoutExercise> workoutExercises = mDb.workoutExerciseDAO().getAll();
 
         if(quotes.size() > 0)
         for(int i = 0; i < quotes.size(); i++) {
@@ -148,6 +209,16 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < exercises.size(); i++) {
             mDb.exerciseDAO().delete(exercises.get(i));
         }
+
+        if(workoutExercises.size() > 0)
+            for(int i = 0; i < workoutExercises.size(); i++) {
+                mDb.workoutExerciseDAO().delete(workoutExercises.get(i));
+            }
+
+        if(workouts.size() > 0)
+            for(int i = 0; i < workouts.size(); i++) {
+                mDb.workoutDAO().delete(workouts.get(i));
+            }
 
         generateQuotes();
         generateExercises();
