@@ -186,7 +186,7 @@ public class WorkoutTracking extends AppCompatActivity {
 
         Button r_20 = dialog.findViewById(R.id.r_20);
         r_20.setOnClickListener((v) -> {
-            repsCount = repsCount + 5;
+            repsCount = repsCount + 20;
             repsEnter.setText(String.valueOf(repsCount));
         });
 
