@@ -1,4 +1,4 @@
-package com.example.musclenerds.ui.Adapters;
+package com.example.musclenerds.ui.exerciseview.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musclenerds.R;
-import com.example.musclenerds.ui.models.Exercise;
-import com.example.musclenerds.ui.models.MuscleGroup;
+import com.example.musclenerds.model.MuscleGroup;
 
 import java.util.ArrayList;
 

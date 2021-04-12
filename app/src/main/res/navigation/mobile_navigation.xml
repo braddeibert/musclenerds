@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/drawer_exercises"
-        android:name="com.example.musclenerds.ui.exerciseview.exercise_view"
+        android:name="com.example.musclenerds.ui.exerciseview.ExerciseViewFragment"
         android:label="@string/menu_exercises"
         tools:layout="@layout/exercise_view_fragment" >
 
@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/IndividualExercise"
-        android:name="com.example.musclenerds.ui.exerciseview.IndividualExercise"
+        android:name="com.example.musclenerds.ui.exerciseview.IndividualExerciseFragment"
         android:label="Exercises"
         tools:layout="@layout/exercise_fragment"/>
 
