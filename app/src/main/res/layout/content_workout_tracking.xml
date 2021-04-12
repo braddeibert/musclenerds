@@ -60,32 +60,6 @@
         app:layout_constraintTop_toBottomOf="@+id/repsDialog"
         app:layout_constraintVertical_bias="0.061" />
 
-    <Button
-        android:id="@+id/nextButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:backgroundTint="#000000"
-        app:icon="@drawable/ic_next_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weightDisplay"
-        app:layout_constraintVertical_bias="0.9" />
-
-    <Button
-        android:id="@+id/prevButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:backgroundTint="#000000"
-        app:icon="@drawable/ic_back_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weightDisplay"
-        app:layout_constraintVertical_bias="0.9" />
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -115,11 +89,38 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="@+id/prevButton"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
         app:layout_constraintEnd_toStartOf="@+id/nextButton"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toEndOf="@+id/prevButton"
-        app:layout_constraintTop_toTopOf="@+id/nextButton" />
+        app:layout_constraintTop_toTopOf="@+id/nextButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:backgroundTint="#000000"
+        app:icon="@drawable/ic_next_button"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.897"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weightDisplay"
+        app:layout_constraintVertical_bias="0.897" />
+
+    <Button
+        android:id="@+id/prevButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:backgroundTint="#000000"
+        app:icon="@drawable/ic_back_button"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.096"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weightDisplay"
+        app:layout_constraintVertical_bias="0.897" />
 
     <TextView
         android:id="@+id/textView5"
@@ -131,5 +132,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weightDisplay"
         app:layout_constraintVertical_bias="0.084" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/activity_main_drawer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
