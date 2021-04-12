@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/drawer_history"
-        android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
+        android:name="com.example.musclenerds.WorkoutHistory"
         android:label="@string/menu_history"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_workout_history" />
 </navigation>
