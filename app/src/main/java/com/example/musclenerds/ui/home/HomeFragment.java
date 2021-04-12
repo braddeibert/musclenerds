@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
                 String wotdText = allWorkouts.get(index).getName() + "\n" + allWorkouts.get(index).getDescription();
 
                 for(int i = 0; i < exercises.size(); i++) {
-                    wotdText += "\n- " + exercises.get(i).getReps() + " " + exercises.get(i).getName() + "s";
+                    wotdText += "\n- " + exercises.get(i).getReps() + " " + exercises.get(i).getName();
                 }
 
                 final String fw = wotdText;

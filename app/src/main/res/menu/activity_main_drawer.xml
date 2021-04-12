@@ -7,12 +7,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_home"
+            android:icon="@drawable/ic_home"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/drawer_workouts"
+            android:icon="@drawable/ic_catalog"
             android:title="@string/menu_workouts" />
         <item
             android:id="@+id/drawer_exercises"
+            android:icon="@drawable/ic_library"
             android:title="@string/menu_exercises" />
         <item
             android:id="@+id/drawer_tracking"
@@ -20,6 +23,7 @@
             android:title="@string/menu_tracking" />
         <item
             android:id="@+id/drawer_history"
+            android:icon="@drawable/ic_calendar"
             android:title="@string/menu_history" />
     </group>
 </menu>
