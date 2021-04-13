@@ -62,7 +62,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Custom
         public ImageButton ivExercise;
         public TextView tvExerciseName;
 
-        public CustomViewHolder(View itemView){
+        public CustomViewHolder(View itemView) {
             super(itemView);
             tvExerciseName = (TextView) itemView.findViewById(R.id.tvExerciseName);
             ivExercise = (ImageButton) itemView.findViewById(R.id.ivExercise);
@@ -73,13 +73,15 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Custom
 
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                    Fragment myFragment = new IndividualExerciseFragment(tvExerciseName.getText().toString());
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.exercise_view, myFragment).addToBackStack(null).commit();
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                        Fragment myFragment = new IndividualExerciseFragment(tvExerciseName.getText().toString());
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.exercise_view, myFragment).addToBackStack(null).commit();
+                        return false;
+                    }
                     return false;
                 }
             });
-
             }
         }
     }
