@@ -50,7 +50,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Custom
     public void onBindViewHolder(CustomViewHolder holder, int position) {
         Exercise exercise = exercises.get(position);
         holder.tvExerciseName.setText(exercise.getName());
-        Picasso.get().load("http://images.esellerpro.com/2347/I/919/71/GYMDUMBELL15kga.jpg").into(holder.ivExercise);
+        Picasso.get().load("https://cdn0.iconfinder.com/data/icons/fitness-11/64/MUSCLE-512.png").resize(100, 80).into(holder.ivExercise);
     }
 
     @Override
