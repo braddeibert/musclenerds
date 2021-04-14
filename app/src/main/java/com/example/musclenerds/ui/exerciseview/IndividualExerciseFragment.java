@@ -37,37 +37,38 @@ public class IndividualExerciseFragment extends Fragment {
 
         mDb = AppDatabase.getInstance(getContext());
 
+        View view = inflater.inflate(R.layout.exercise_fragment, container, false);
+
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 // create a list of exercises.
                 List<Exercise> exercises = mDb.exerciseDAO().getAll();
 
-                for(int i = 0; i < exercises.size(); i++){
-                    if(exerciseName.equals(exercises.get(i).getName())){
+                for(int i = 0; i < exercises.size(); i++) {
+                    if (exerciseName.equals(exercises.get(i).getName())) {
                         selectedExercise = exercises.get(i);
                         break;
                     }
                 }
+
+                final TextView exerciseNameText = view.findViewById(R.id.textView7);
+                final TextView repsText = view.findViewById(R.id.textView9);
+                final TextView muscleGroupsText = view.findViewById(R.id.textView8);
+                final TextView setsText = view.findViewById(R.id.textView10);
+                final TextView etcText = view.findViewById(R.id.textView11);
+                final TextView equipmentText = view.findViewById(R.id.textView14);
+                final ImageView exerciseGif = view.findViewById(R.id.imageView2);
+
+                exerciseNameText.setText(exerciseName);
+                muscleGroupsText.setText(selectedExercise.getTarget_muscles());
+                setsText.setText(String.valueOf(selectedExercise.getSets()));
+                repsText.setText(String.valueOf(selectedExercise.getReps()));
+                equipmentText.setText(selectedExercise.getEquipment());
+                etcText.setText(selectedExercise.getDescription());
+
             }
         });
-
-        View view = inflater.inflate(R.layout.exercise_fragment, container, false);
-
-        final TextView exerciseNameText = view.findViewById(R.id.textView7);
-        final TextView repsText = view.findViewById(R.id.textView9);
-        final TextView muscleGroupsText = view.findViewById(R.id.textView8);
-        final TextView setsText = view.findViewById(R.id.textView10);
-        final TextView etcText = view.findViewById(R.id.textView11);
-        final TextView equipmentText = view.findViewById(R.id.textView14);
-        final ImageView exerciseGif = view.findViewById(R.id.imageView2);
-
-        exerciseNameText.setText(exerciseName);
-        muscleGroupsText.setText(selectedExercise.getTarget_muscles());
-        setsText.setText(String.valueOf(selectedExercise.getSets()));
-        repsText.setText(String.valueOf(selectedExercise.getReps()));
-        equipmentText.setText(selectedExercise.getEquipment());
-        etcText.setText(selectedExercise.getDescription());
 
         //Set the text to the database items depending on which imageview was clicked in ExerciseView Fragmment
         return view;
