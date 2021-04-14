@@ -19,9 +19,9 @@
 
     <fragment
         android:id="@+id/drawer_workouts"
-        android:name="com.example.musclenerds.ui.gallery.GalleryFragment"
+        android:name="com.example.musclenerds.ui.workoutcatalog.WorkoutCatalogFragment"
         android:label="@string/menu_workouts"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/workout_catalog_fragment" />
 
     <fragment
         android:id="@+id/drawer_exercises"
