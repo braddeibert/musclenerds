@@ -1,6 +1,8 @@
 package com.example.musclenerds.ui.exerciseview;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +54,8 @@ public class IndividualExerciseFragment extends Fragment {
                     }
                 }
 
+                //Set the text to the database items depending on which imageview was clicked in ExerciseView Fragmment
+
                 final TextView exerciseNameText = view.findViewById(R.id.textView7);
                 final TextView repsText = view.findViewById(R.id.textView9);
                 final TextView muscleGroupsText = view.findViewById(R.id.textView8);
@@ -60,17 +64,19 @@ public class IndividualExerciseFragment extends Fragment {
                 final TextView equipmentText = view.findViewById(R.id.textView14);
                 final ImageView exerciseGif = view.findViewById(R.id.imageView2);
 
-                exerciseNameText.setText(exerciseName);
-                muscleGroupsText.setText(selectedExercise.getTarget_muscles());
-                setsText.setText(String.valueOf(selectedExercise.getSets()));
-                repsText.setText(String.valueOf(selectedExercise.getReps()));
-                equipmentText.setText(selectedExercise.getEquipment());
-                etcText.setText(selectedExercise.getDescription());
-
+                new Handler(Looper.getMainLooper()).post(new Runnable(){
+                    @Override
+                    public void run() {
+                        exerciseNameText.setText(exerciseName);
+                        muscleGroupsText.setText(selectedExercise.getTarget_muscles());
+                        setsText.setText(String.valueOf(selectedExercise.getSets()));
+                        repsText.setText(String.valueOf(selectedExercise.getReps()));
+                        equipmentText.setText(selectedExercise.getEquipment());
+                        etcText.setText(selectedExercise.getDescription());
+                    }
+                });
             }
         });
-
-        //Set the text to the database items depending on which imageview was clicked in ExerciseView Fragmment
         return view;
     }
 }
