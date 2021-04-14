@@ -55,14 +55,13 @@ public class IndividualExerciseFragment extends Fragment {
                 }
 
                 //Set the text to the database items depending on which imageview was clicked in ExerciseView Fragmment
-
                 final TextView exerciseNameText = view.findViewById(R.id.textView7);
                 final TextView repsText = view.findViewById(R.id.textView9);
                 final TextView muscleGroupsText = view.findViewById(R.id.textView8);
                 final TextView setsText = view.findViewById(R.id.textView10);
                 final TextView etcText = view.findViewById(R.id.textView11);
                 final TextView equipmentText = view.findViewById(R.id.textView14);
-                final ImageView exerciseGif = view.findViewById(R.id.imageView2);
+
 
                 new Handler(Looper.getMainLooper()).post(new Runnable(){
                     @Override
