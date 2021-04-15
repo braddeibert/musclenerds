@@ -10,12 +10,14 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -24,6 +26,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class WorkoutTracking extends AppCompatActivity {
+
+    private Chronometer stopwatch;
+    private long pauseOffset;
+    private boolean running;
 
     private AppBarConfiguration mAppBarConfiguration;
     private AppDatabase mDb; // make a reference to the database.
@@ -43,6 +49,8 @@ public class WorkoutTracking extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        stopwatch = findViewById(R.id.stopwatch);
+
         weightDialog = findViewById(R.id.weightDialog);
         weightDisplay = findViewById(R.id.weightDisplay);
 
@@ -53,6 +61,27 @@ public class WorkoutTracking extends AppCompatActivity {
         repsDialog.setOnClickListener(view -> showRepsDialog());
 
 
+    }
+
+    public void startStopwatch(View v) {
+        if(!running){
+            stopwatch.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            stopwatch.start();
+            running = true;
+        }
+    }
+
+    public void pauseStopwatch(View v) {
+        if(running) {
+            stopwatch.stop();
+            pauseOffset = SystemClock.elapsedRealtime() - stopwatch.getBase();
+            running = false;
+        }
+    }
+
+    public void resetStopwatch(View v) {
+        stopwatch.setBase(SystemClock.elapsedRealtime());
+        pauseOffset = 0;
     }
 
     //function to display weight dialog
