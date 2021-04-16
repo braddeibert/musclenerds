@@ -1,4 +1,4 @@
-package com.example.musclenerds.model;
+package com.example.musclenerds.ui.exerciseview;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;

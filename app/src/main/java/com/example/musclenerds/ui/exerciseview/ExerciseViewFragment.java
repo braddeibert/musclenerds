@@ -1,32 +1,20 @@
 package com.example.musclenerds.ui.exerciseview;
 
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.musclenerds.R;
 import com.example.musclenerds.database.AppDatabase;
 import com.example.musclenerds.database.AppExecutors;
 import com.example.musclenerds.model.Exercise;
 import com.example.musclenerds.ui.exerciseview.Adapters.MuscleGroupAdapter;
-import com.example.musclenerds.model.MuscleGroup;
 
 import java.util.ArrayList;
 import java.util.List;

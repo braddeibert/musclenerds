@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musclenerds.R;
-import com.example.musclenerds.model.MuscleGroup;
-import com.example.musclenerds.model.WorkoutMuscleGroup;
+import com.example.musclenerds.ui.workoutcatalog.WorkoutMuscleGroup;
 
 import java.util.ArrayList;
 

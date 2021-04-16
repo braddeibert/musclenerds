@@ -1,9 +1,10 @@
-package com.example.musclenerds.model;
+package com.example.musclenerds.ui.workoutcatalog;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import com.example.musclenerds.model.Exercise;
+import com.example.musclenerds.model.Workout;
 
 //Model for the musclegroup list. This is the scrollable part of the recyclerview
 

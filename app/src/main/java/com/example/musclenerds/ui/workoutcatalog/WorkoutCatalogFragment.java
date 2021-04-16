@@ -2,12 +2,8 @@ package com.example.musclenerds.ui.workoutcatalog;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,11 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.musclenerds.R;
 import com.example.musclenerds.database.AppDatabase;
 import com.example.musclenerds.database.AppExecutors;
-import com.example.musclenerds.model.Exercise;
 import com.example.musclenerds.model.Workout;
-import com.example.musclenerds.model.WorkoutMuscleGroup;
-import com.example.musclenerds.ui.exerciseview.Adapters.MuscleGroupAdapter;
-import com.example.musclenerds.model.MuscleGroup;
 import com.example.musclenerds.ui.workoutcatalog.WorkoutAdapters.WorkoutMuscleGroupAdapter;
 
 import java.util.ArrayList;
