@@ -29,17 +29,17 @@ public class MuscleGroups {
         this.id = id;
     }
 
-    public int getW_ID() {
+    public int getG_ID() {
         return G_ID;
     }
-    public void setW_ID(int G_ID) {
+    public void setG_ID(int G_ID) {
         this.G_ID = G_ID;
     }
 
-    public int getE_ID() {
+    public int getM_ID() {
         return M_ID;
     }
-    public void setE_ID(int M_ID) {
+    public void setM_ID(int M_ID) {
         this.M_ID = M_ID;
     }
 }

@@ -31,9 +31,9 @@ public interface MuscleGroupsDAO {
     @Delete
     void delete(MuscleGroups group);
 
-    @Query("SELECT * FROM WORKOUTEXERCISE WHERE id = :id")
+    @Query("SELECT * FROM MUSCLEGROUPS WHERE id = :id")
     MuscleGroups findById(int id);
 
-    @Query("SELECT * FROM WORKOUTEXERCISE WHERE W_ID = :W_ID")
-    List<MuscleGroups> findByW_ID(int W_ID);
+    @Query("SELECT * FROM MUSCLEGROUPS WHERE G_ID = :G_ID")
+    List<MuscleGroups> findByG_ID(int G_ID);
 }
