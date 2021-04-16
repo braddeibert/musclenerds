@@ -56,21 +56,21 @@ public class IndividualExerciseFragment extends Fragment {
 
                 //Set the text to the database items depending on which imageview was clicked in ExerciseView Fragmment
                 final TextView exerciseNameText = view.findViewById(R.id.textView7);
-                final TextView repsText = view.findViewById(R.id.textView9);
-                final TextView muscleGroupsText = view.findViewById(R.id.textView8);
-                final TextView setsText = view.findViewById(R.id.textView10);
+                final TextView repsText = view.findViewById(R.id.textView12);
+                final TextView muscleGroupsText = view.findViewById(R.id.textView2);
+                final TextView setsText = view.findViewById(R.id.textView6);
                 final TextView etcText = view.findViewById(R.id.textView11);
-                final TextView equipmentText = view.findViewById(R.id.textView14);
+                final TextView equipmentText = view.findViewById(R.id.textView13);
 
 
                 new Handler(Looper.getMainLooper()).post(new Runnable(){
                     @Override
                     public void run() {
                         exerciseNameText.setText(exerciseName);
-                        muscleGroupsText.setText(selectedExercise.getTarget_muscles());
-                        setsText.setText(String.valueOf(selectedExercise.getSets()));
-                        repsText.setText(String.valueOf(selectedExercise.getReps()));
-                        equipmentText.setText(selectedExercise.getEquipment());
+                        muscleGroupsText.append(selectedExercise.getTarget_muscles());
+                        setsText.append(String.valueOf(selectedExercise.getSets()));
+                        repsText.append(String.valueOf(selectedExercise.getReps()));
+                        equipmentText.append(selectedExercise.getEquipment());
                         etcText.setText(selectedExercise.getDescription());
                     }
                 });
