@@ -272,22 +272,22 @@
   "WORKOUTS": [
     {
       "id": 1,
+      "mgid": 1,
       "Name": "Full Body Strength",
-      "Target_Muscles": "Full Body",
       "Duration": 60,
       "Description": "A simple 5x5 strength workout for the full body. "
     },
     {
       "id": 2,
+      "mgid": 3,
       "Name": "Upper Body Hypertrophy",
-      "Target_Muscles": "Upper Body",
       "Duration": 90,
       "Description": "A hypertrophy workout for the upper body. All rep ranges 8-12. "
     },
     {
       "id": 3,
+      "mgid": 4,
       "Name": "Arms Hypertrophy",
-      "Target_Muscles": "Arms",
       "Duration": 60,
       "Description": "Time to hit some arms! Pump guaranteed. "
     }
