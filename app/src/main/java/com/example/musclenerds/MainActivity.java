@@ -1,11 +1,20 @@
 package com.example.musclenerds;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
-
+import com.example.musclenerds.model.Equipment;
+import com.example.musclenerds.model.ExerciseEquipment;
+import com.example.musclenerds.model.Muscle;
+import com.example.musclenerds.model.MuscleGroup;
+import com.example.musclenerds.model.MuscleGroups;
+import com.example.musclenerds.model.TrackedSet;
+import com.example.musclenerds.model.TrackedWorkout;
 import com.example.musclenerds.model.Workout;
 import com.example.musclenerds.model.WorkoutExercise;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,6 +33,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.Random;
 
@@ -35,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -55,20 +76,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavView, navController);
 
         mDb = AppDatabase.getInstance(getApplicationContext()); // let the database handle creating a singleton instance. Must be done in an activity or something that extends an activity.
-
-        //then use the executor to handle the execution.
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                //let's just refresh the static data every time.
-                //see functions at bottom of file.
-                //refreshDatabase();
-                refreshDatabase();
+        new JsonTask().execute("https://raw.githubusercontent.com/braddeibert/musclenerds/master/test_data.json");
 
 
-                //mDb.clearAllTables();
-            }
-        });
     }
 
     @Override
@@ -116,124 +126,263 @@ public class MainActivity extends AppCompatActivity {
         mDb.quoteDao().insert(newQuote); // insert a quote.
     }
 
-    public void generateExercises() {
-        Workout newWorkout = new Workout("Beginner Bodyweight Workout", "An easy workout for beginners using only bodyweight", "Full Body", 20);
-        mDb.workoutDAO().insert(newWorkout);
-        newWorkout = new Workout("20 minute workout", "A quick workout for people with limited time.", "Full Body", 20);
-        mDb.workoutDAO().insert(newWorkout);
-        newWorkout = mDb.workoutDAO().getAll().get(0);
+    String txtJson;
+    ProgressDialog pd;
 
-        Exercise newExercise = new Exercise(
-                "Sit-Up",
-                "Lie down on your back. bend your legs and stabalize your lower bodey. Cross your hands to opposite shoulders, or place them behind your ears without pulling on your neck. Lift your head and shoulder blades from the ground, Exhale as you rise. Lower, returning to your starting point, exhale as you lower. Repeat.",
-                "abdominal muscles",
-                4,
-                5,
-                "none",
-                "none for now");
-        mDb.exerciseDAO().insert(newExercise);
+    private class JsonTask extends AsyncTask<String, String, String> {
 
-        newExercise = new Exercise(
-                "Push-Up",
-                "Get down on all fours, placing your hands slightly wider than your shoulders. Straighten your arms and legs. Lower your body until your chest nearly touches the floor. Pause, then push yourself back up. Repeat.",
-                "triceps",
-                4,
-                5,
-                "none",
-                "none for now");
-        mDb.exerciseDAO().insert(newExercise);
+        protected void onPreExecute() {
+            super.onPreExecute();
 
-        newExercise = new Exercise(
-                "Squat",
-                "",
-                "Legs",
-                20,
-                1,
-                "none",
-                "none for now");
-        mDb.exerciseDAO().insert(newExercise);
-
-        newExercise = new Exercise(
-                "Lunge",
-                "",
-                "Legs",
-                20,
-                1,
-                "none",
-                "none for now");
-        mDb.exerciseDAO().insert(newExercise);
-
-        newExercise = new Exercise(
-                "Plank",
-                "",
-                "abs",
-                15,
-                0,
-                "none",
-                "none for now");
-        mDb.exerciseDAO().insert(newExercise);
-
-        newExercise = new Exercise(
-                "Jumping Jack",
-                "",
-                "",
-                30,
-                1,
-                "none",
-                "none for now");
-        mDb.exerciseDAO().insert(newExercise);
-
-        // let's get a list of all workouts on the database so far.
-        // then we can iterate through the list and link each exercise to the workout we created earlier.
-        // these links are represented as entities in the WorkoutExercise table.
-        List<Exercise> allExercises = mDb.exerciseDAO().getAll();
-        for(int i = 0; i < allExercises.size(); i++) {
-            WorkoutExercise newWorkoutExercise = new WorkoutExercise(newWorkout.getId(), allExercises.get(i).getId());
-            mDb.workoutExerciseDAO().insert(newWorkoutExercise);
+            pd = new ProgressDialog(MainActivity.this);
+            pd.setMessage("Please wait");
+            pd.setCancelable(false);
+            pd.show();
         }
 
-    }
+        protected String doInBackground(String... params) {
 
-    public void refreshDatabase() {
-        List<MotivationalQuote> quotes = mDb.quoteDao().getAll();
-        List<Exercise> exercises = mDb.exerciseDAO().getAll();
-        List<Workout> workouts = mDb.workoutDAO().getAll();
-        List<WorkoutExercise> workoutExercises = mDb.workoutExerciseDAO().getAll();
 
-        if(quotes.size() > 0)
-        for(int i = 0; i < quotes.size(); i++) {
-            mDb.quoteDao().delete(quotes.get(i));
-        }
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
 
-        if(exercises.size() > 0)
-        for(int i = 0; i < exercises.size(); i++) {
-            mDb.exerciseDAO().delete(exercises.get(i));
-        }
+            try {
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
 
-        if(workoutExercises.size() > 0)
-            for(int i = 0; i < workoutExercises.size(); i++) {
-                mDb.workoutExerciseDAO().delete(workoutExercises.get(i));
+
+                InputStream stream = connection.getInputStream();
+
+                reader = new BufferedReader(new InputStreamReader(stream));
+
+                StringBuffer buffer = new StringBuffer();
+                String line = "";
+
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line+"\n");
+                    //Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
+
+                }
+
+                return buffer.toString();
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-
-        if(workouts.size() > 0)
-            for(int i = 0; i < workouts.size(); i++) {
-                mDb.workoutDAO().delete(workouts.get(i));
-            }
-
-        generateQuotes();
-        generateExercises();
-
-        quotes = mDb.quoteDao().getAll();
-        exercises = mDb.exerciseDAO().getAll();
-
-        Log.d("AppData_LOG", "Fetched " + quotes.size() + " quotes:");
-        for(int i = 0; i < quotes.size(); i++) {
-            Log.d("AppData_LOG", "id: " + quotes.get(i).getId() + " text: " + quotes.get(i).getText());
+            return null;
         }
 
-        Log.d("AppData_LOG", "Fetched " + exercises.size() + " exercises:");
-        for(int i = 0; i < exercises.size(); i++) {
-            Log.d("AppData_LOG", "id: " + exercises.get(i).getId() + " name: " + exercises.get(i).getName());
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if (pd.isShowing()){
+                pd.dismiss();
+            }
+            txtJson = result;
+            //Log.d("json_log", result);
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+
+                    JSONObject jObject;
+                    JSONArray exercises, exerciseEquipment, equipment, muscles, muscleGroups, muscleGroup, workouts, workoutExercises, trackedWorkouts, trackedSets;
+                    //let's just refresh the static data every time.
+                    //see functions at bottom of file.
+                    //refreshDatabase();
+                    //refreshDatabase();
+                    mDb.clearAllTables();
+                    generateQuotes();
+                    // create a json object from the result.
+                    try {
+                        //create the json object. Then fetch all the arrays from it.
+                        jObject = new JSONObject(result);
+                        exercises = jObject.getJSONArray("EXERCISES");
+                        exerciseEquipment = jObject.getJSONArray("EXERCISE_EQUIPMENT");
+                        equipment = jObject.getJSONArray("EQUIPMENT");
+                        muscles = jObject.getJSONArray("MUSCLES");
+                        muscleGroups = jObject.getJSONArray("MUSCLE_GROUPS");
+                        muscleGroup = jObject.getJSONArray("MUSCLE_GROUP");
+                        workouts = jObject.getJSONArray("WORKOUTS");
+                        workoutExercises = jObject.getJSONArray("WORKOUT_EXERCISES");
+                        trackedWorkouts = jObject.getJSONArray("TRACKED_WORKOUTS");
+                        trackedSets = jObject.getJSONArray("TRACKED_SETS");
+
+                        //let's parse the arrays, order matters.
+                        for (int i=0; i < equipment.length(); i++)
+                        {
+                            try {
+                                JSONObject oneObject = equipment.getJSONObject(i);
+                                // Pulling items from the array
+                                int id = oneObject.getInt("id");
+                                String name = oneObject.getString("Name");
+                                Log.d("exercise_log", name);
+                                Equipment newEquipment = new Equipment(id, name);
+                                mDb.equipmentDAO().insert(newEquipment);
+                            } catch (JSONException e) {
+                                // Oops
+                            }
+                        }
+                        // Next parse the exercises
+                        for (int i=0; i < exercises.length(); i++)
+                        {
+                            try {
+                                JSONObject oneObject = exercises.getJSONObject(i);
+                                // Pulling items from the array
+                                int id = oneObject.getInt("id");
+                                String name = oneObject.getString("Name");
+                                String type = oneObject.getString("Type");
+                                String desc = oneObject.getString("Description");
+                                Exercise newExercise = new Exercise(id, name, desc, type, "");
+                                Log.d("exercise_log", newExercise.getName());
+                                mDb.exerciseDAO().insert(newExercise);
+                            } catch (JSONException e) {
+                                // Oops
+                            }
+                        }
+                        // Next parse the exerciseEquipment
+                        for (int i=0; i < exerciseEquipment.length(); i++)
+                        {
+                            try {
+                                JSONObject oneObject = exerciseEquipment.getJSONObject(i);
+                                // Pulling items from the array
+                                int e_id = oneObject.getInt("exid");
+                                int eq_id = oneObject.getInt("eqid");
+                                ExerciseEquipment newExerciseEquipment = new ExerciseEquipment(eq_id, e_id);
+                                mDb.exerciseEquipmentDAO().insert(newExerciseEquipment);
+                            } catch (JSONException e) {
+                                // Oops
+                            }
+                        }
+                        // Next parse the muscles
+                        for (int i=0; i < muscles.length(); i++)
+                        {
+                            try {
+                                JSONObject oneObject = muscles.getJSONObject(i);
+                                // Pulling items from the array
+                                int id = oneObject.getInt("id");
+                                String name = oneObject.getString("Name");
+                                Muscle newMuscle = new Muscle(id, name);
+                                mDb.muscleDAO().insert(newMuscle);
+                            } catch (JSONException e) {
+                                // Oops
+                            }
+                        }
+                        // Next parse the muscleGroup
+                        for (int i=0; i < muscleGroup.length(); i++)
+                        {
+                            try {
+                                JSONObject oneObject = muscleGroup.getJSONObject(i);
+                                // Pulling items from the array
+                                int id = oneObject.getInt("id");
+                                String name = oneObject.getString("name");
+                                MuscleGroup newMuscleGroup = new MuscleGroup(id, name);
+                                mDb.muscleGroupDAO().insert(newMuscleGroup);
+                            } catch (JSONException e) {
+                                // Oops
+                            }
+                        }
+                        // Next parse the muscleGroups
+                        for (int i=0; i < muscleGroups.length(); i++)
+                        {
+                            try {
+                                JSONObject oneObject = muscleGroups.getJSONObject(i);
+                                // Pulling items from the array
+                                int G_ID = oneObject.getInt("gid");
+                                int M_ID = oneObject.getInt("mid");
+                                MuscleGroups newMuscleGroups = new MuscleGroups(G_ID, M_ID);
+                                mDb.muscleGroupsDAO().insert(newMuscleGroups);
+                            } catch (JSONException e) {
+                                // Oops
+                            }
+                        }
+                        // Next parse the workouts
+                        for (int i=0; i < workouts.length(); i++)
+                        {
+                            try {
+                                JSONObject oneObject = workouts.getJSONObject(i);
+                                // Pulling items from the array
+                                int id = oneObject.getInt("id");
+                                int g_id = oneObject.getInt("mgid");
+                                String name = oneObject.getString("Name");
+                                String desc = oneObject.getString("Description");
+                                int duration = oneObject.getInt("Duration");
+                                Workout newWorkout = new Workout(id, name, desc, duration, g_id);
+                                Log.d("exercise_log", "workout: " + newWorkout.getName());
+                                mDb.workoutDAO().insert(newWorkout);
+                            } catch (JSONException e) {
+                                Log.d("exercise_log", "Error fetching workouts");
+                            }
+                        }
+                        // Next parse the workoutExercises
+                        for (int i=0; i < workoutExercises.length(); i++)
+                        {
+                            try {
+                                JSONObject oneObject = workoutExercises.getJSONObject(i);
+                                // Pulling items from the array
+                                int w_id = oneObject.getInt("wid");
+                                int e_id = oneObject.getInt("eid");
+                                int sets = oneObject.getInt("sets");
+                                int reps = oneObject.getInt("reps");
+                                WorkoutExercise newWorkoutExercise = new WorkoutExercise(w_id, e_id, sets, reps);
+                                mDb.workoutExerciseDAO().insert(newWorkoutExercise);
+                            } catch (JSONException e) {
+                                // Oops
+                            }
+                        }
+                        // Next parse the trackedWorkouts
+                        for (int i=0; i < trackedWorkouts.length(); i++)
+                        {
+                            try {
+                                JSONObject oneObject = trackedWorkouts.getJSONObject(i);
+                                // Pulling items from the array
+                                int id = oneObject.getInt("id");
+                                int w_id = oneObject.getInt("wid");
+                                String date = oneObject.getString("date_completed");
+                                int duration = oneObject.getInt("duration");
+                                TrackedWorkout newTrackedWorkout = new TrackedWorkout(id, w_id, duration, date);
+                                mDb.trackedWorkoutDAO().insert(newTrackedWorkout);
+                            } catch (JSONException e) {
+                                // Oops
+                            }
+                        }
+                        // Next parse the trackedSets
+                        for (int i=0; i < trackedSets.length(); i++)
+                        {
+                            try {
+                                JSONObject oneObject = trackedSets.getJSONObject(i);
+                                // Pulling items from the array
+                                int eid = oneObject.getInt("eid");
+                                int tid = oneObject.getInt("tid");
+                                int reps = oneObject.getInt("reps");
+                                int weight = oneObject.getInt("weight");
+                                int difficulty = oneObject.getInt("difficulty");
+                                TrackedSet newTrackedSet = new TrackedSet(eid, tid, reps, weight, difficulty, "");
+                                mDb.trackedSetDAO().insert(newTrackedSet);
+                            } catch (JSONException e) {
+                                // Oops
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }
     }
 }
