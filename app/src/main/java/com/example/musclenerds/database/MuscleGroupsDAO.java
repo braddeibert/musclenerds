@@ -3,6 +3,7 @@ package com.example.musclenerds.database;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -22,7 +23,7 @@ public interface MuscleGroupsDAO {
     @Query("SELECT * FROM MUSCLEGROUPS ORDER BY ID")
     List<MuscleGroups> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(MuscleGroups group);
 
     @Update

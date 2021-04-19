@@ -3,6 +3,7 @@ package com.example.musclenerds.database;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -15,7 +16,7 @@ public interface EquipmentDAO {
     @Query("SELECT * FROM EQUIPMENT ORDER BY id")
     List<Equipment> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Equipment equipment);
 
     @Update
