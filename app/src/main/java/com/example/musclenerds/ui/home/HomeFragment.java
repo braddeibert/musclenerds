@@ -74,9 +74,11 @@ public class HomeFragment extends Fragment {
                 index = rand.nextInt(allWorkouts.size() - 1);
                 //create a list of workout id numbers by getting all workoutExercise items with the matching w_id from the randomly selected workout.
                 List<WorkoutExercise> workoutExercises = mDb.workoutExerciseDAO().findByW_ID(allWorkouts.get(index).getId());
+                Log.d("size_log", "workout: \n" + allWorkouts.get(index).getName() + "\nid: " + allWorkouts.get(index).getId());
 
                 //then make a list of all the exercises from the workoutExercises list.
                 List<Exercise> exercises = new ArrayList<Exercise>();
+                Log.d("size_log", "size: " + workoutExercises.size());
                 for(int i = 0; i < workoutExercises.size(); i++) {
                     exercises.add(mDb.exerciseDAO().findById(workoutExercises.get(i).getE_ID()));
                 }
@@ -84,7 +86,7 @@ public class HomeFragment extends Fragment {
                 String wotdText = allWorkouts.get(index).getName() + "\n" + allWorkouts.get(index).getDescription();
 
                 for(int i = 0; i < exercises.size(); i++) {
-                    wotdText += "\n- " + exercises.get(i).getReps() + " " + exercises.get(i).getName();
+                    wotdText += "\n- " + exercises.get(i).getName();
                 }
 
                 final String fw = wotdText;
