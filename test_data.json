@@ -3,81 +3,61 @@
     {
       "id": 1,
       "Name": "Back Squat",
-      "Target_Muscles": "Legs",
       "Type": "Resistance",
-      "Equipment": "Rack Barbell",
       "Description": "Compound lower body exercise ideal for progressive overload and heavy loads. Brace the core and maintain a neutral spine. "
     },
     {
       "id": 2,
       "Name": "Bench Press",
-      "Target_Muscles": "Chest Shoulders Triceps",
       "Type": "Resistance",
-      "Equipment": "Rack Bench Barbell",
       "Description": "Compound upper body pressing movement ideal for progressive overload and heavy loads. Keep a rigid and tight back on the bench. Use a spotter for heavy loads. "
     },
     {
       "id": 3,
       "Name": "Deadlift",
-      "Target_Muscles": "Full Body",
       "Type": "Resistance",
-      "Equipment": "Barbell",
       "Description": "Compound full body lift ideal for progressive overload and heavy loads. Brace the core and maintain a neutral spine. "
     },
     {
       "id": 4,
       "Name": "Dumbbell Military Press",
-      "Target_Muscles": "Shoulders Triceps",
       "Type": "Resistance",
-      "Equipment": "Dumbbells Bench",
       "Description": "Compound exercise for the shoulders. "
     },
     {
       "id": 5,
       "Name": "Pull Ups",
-      "Target_Muscles": "Back Biceps",
       "Type": "Resistance",
-      "Equipment": "Pull Up Bar",
       "Description": "Compound exercise for the back. Can be done with assistance, body weight, or added resistance if necessary. "
     },
     {
       "id": 6,
       "Name": "Dumbbell Row",
-      "Target_Muscles": "Back Biceps",
       "Type": "Resistance",
-      "Equipment": "Bench Dumbbells",
       "Description": "Compound unilateral exercise for the back. Maintain a neutral spine while performing each repetition. "
     },
     {
       "id": 7,
       "Name": "Dumbbell Curl",
-      "Target_Muscles": "Biceps",
       "Type": "Resistance",
-      "Equipment": "Dumbbells",
       "Description": "Isolation exercise for targeting the biceps. Prevent using momentum from swinging the weight. "
     },
     {
       "id": 8,
       "Name": "Tricep Pushdowns",
-      "Target_Muscles": "Triceps",
       "Type": "Resistance",
-      "Equipment": "Cables",
       "Description": "Isolation exercise targeting the triceps. Use a straight bar, v-bar, or rope attachment. "
     },
     {
       "id": 9,
       "Name": "Sit Ups",
-      "Target_Muscles": "Abdominals",
       "Type": "Resistance",
-      "Equipment": "None",
       "Description": "Exercise for targeting the abdominals. Can be done with body weight or added resistance if necessary. "
     },
     {
       "id": 10,
       "Name": "Lat Pulldown",
-      "Target_Muscles": "Back Biceps",
       "Type": "Resistance",
-      "Equipment": "Cables",
       "Description": "Compound exercise for the back. Use a natural pull-up width grip. "
     }
   ],
