@@ -1,0 +1,474 @@
+{
+  "EXERCISES": [
+    {
+      "id": 1,
+      "Name": "Back Squat",
+      "Target_Muscles": "Legs",
+      "Type": "Resistance",
+      "Equipment": "Rack Barbell",
+      "Description": "Compound lower body exercise ideal for progressive overload and heavy loads. Brace the core and maintain a neutral spine. "
+    },
+    {
+      "id": 2,
+      "Name": "Bench Press",
+      "Target_Muscles": "Chest Shoulders Triceps",
+      "Type": "Resistance",
+      "Equipment": "Rack Bench Barbell",
+      "Description": "Compound upper body pressing movement ideal for progressive overload and heavy loads. Keep a rigid and tight back on the bench. Use a spotter for heavy loads. "
+    },
+    {
+      "id": 3,
+      "Name": "Deadlift",
+      "Target_Muscles": "Full Body",
+      "Type": "Resistance",
+      "Equipment": "Barbell",
+      "Description": "Compound full body lift ideal for progressive overload and heavy loads. Brace the core and maintain a neutral spine. "
+    },
+    {
+      "id": 4,
+      "Name": "Dumbbell Military Press",
+      "Target_Muscles": "Shoulders Triceps",
+      "Type": "Resistance",
+      "Equipment": "Dumbbells Bench",
+      "Description": "Compound exercise for the shoulders. "
+    },
+    {
+      "id": 5,
+      "Name": "Pull Ups",
+      "Target_Muscles": "Back Biceps",
+      "Type": "Resistance",
+      "Equipment": "Pull Up Bar",
+      "Description": "Compound exercise for the back. Can be done with assistance, body weight, or added resistance if necessary. "
+    },
+    {
+      "id": 6,
+      "Name": "Dumbbell Row",
+      "Target_Muscles": "Back Biceps",
+      "Type": "Resistance",
+      "Equipment": "Bench Dumbbells",
+      "Description": "Compound unilateral exercise for the back. Maintain a neutral spine while performing each repetition. "
+    },
+    {
+      "id": 7,
+      "Name": "Dumbbell Curl",
+      "Target_Muscles": "Biceps",
+      "Type": "Resistance",
+      "Equipment": "Dumbbells",
+      "Description": "Isolation exercise for targeting the biceps. Prevent using momentum from swinging the weight. "
+    },
+    {
+      "id": 8,
+      "Name": "Tricep Pushdowns",
+      "Target_Muscles": "Triceps",
+      "Type": "Resistance",
+      "Equipment": "Cables",
+      "Description": "Isolation exercise targeting the triceps. Use a straight bar, v-bar, or rope attachment. "
+    },
+    {
+      "id": 9,
+      "Name": "Sit Ups",
+      "Target_Muscles": "Abdominals",
+      "Type": "Resistance",
+      "Equipment": "None",
+      "Description": "Exercise for targeting the abdominals. Can be done with body weight or added resistance if necessary. "
+    },
+    {
+      "id": 10,
+      "Name": "Lat Pulldown",
+      "Target_Muscles": "Back Biceps",
+      "Type": "Resistance",
+      "Equipment": "Cables",
+      "Description": "Compound exercise for the back. Use a natural pull-up width grip. "
+    }
+  ],
+
+  "EXERCISE_EQUIPMENT": [
+    {
+      "exid": 1,
+      "eqid": 1
+    },
+    {
+      "exid": 1,
+      "eqid": 3
+    },
+    {
+      "exid": 2,
+      "eqid": 1
+    },
+    {
+      "exid": 2,
+      "eqid": 2
+    },
+    {
+      "exid": 2,
+      "eqid": 3
+    },
+    {
+      "exid": 3,
+      "eqid": 1
+    },
+    {
+      "exid": 4,
+      "eqid": 2
+    },
+    {
+      "exid": 4,
+      "eqid": 4
+    },
+    {
+      "exid": 5,
+      "eqid": 6
+    },
+    {
+      "exid": 6,
+      "eqid": 2
+    },
+    {
+      "exid": 6,
+      "eqid": 4
+    },
+    {
+      "exid": 7,
+      "eqid": 4
+    },
+    {
+      "exid": 8,
+      "eqid": 5
+    },
+    {
+      "exid": 9,
+      "eqid": 7
+    },
+    {
+      "exid": 10,
+      "eqid": 5
+    }
+  ],
+
+  "EQUIPMENT": [
+    {
+      "id": 1,
+      "Name": "Barbell"
+    },
+    {
+      "id": 2,
+      "Name": "Bench"
+    },
+    {
+      "id": 3,
+      "Name": "Rack"
+    },
+    {
+      "id": 4,
+      "Name": "Dumbbells"
+    },
+    {
+      "id": 5,
+      "Name": "Cables"
+    },
+    {
+      "id": 6,
+      "Name": "Pull Up Bar"
+    },
+    {
+      "id": 7,
+      "Name": "None"
+    }
+  ],
+
+  "MUSCLES": [
+    {
+      "id": 1,
+      "Name": "Chest"
+    },
+    {
+      "id": 2,
+      "Name": "Shoulders"
+    },
+    {
+      "id": 3,
+      "Name": "Legs"
+    },
+    {
+      "id": 4,
+      "Name": "Biceps"
+    },
+    {
+      "id": 5,
+      "Name": "Triceps"
+    },
+    {
+      "id": 6,
+      "Name": "Back"
+    },
+    {
+      "id": 7,
+      "Name": "Abdominals"
+    }
+  ],
+
+  "MUSCLE_GROUPS": [
+    {
+      "gid": 1,
+      "mid": 1
+    },
+    {
+      "gid": 1,
+      "mid": 2
+    },
+    {
+      "gid": 1,
+      "mid": 3
+    },
+    {
+      "gid": 1,
+      "mid": 4
+    },
+    {
+      "gid": 1,
+      "mid": 5
+    },
+    {
+      "gid": 1,
+      "mid": 6
+    },
+    {
+      "gid": 1,
+      "mid": 7
+    },
+    {
+      "gid": 2,
+      "mid": 3
+    },
+    {
+      "gid": 3,
+      "mid": 1
+    },
+    {
+      "gid": 3,
+      "mid": 2
+    },
+    {
+      "gid": 3,
+      "mid": 4
+    },
+    {
+      "gid": 3,
+      "mid": 5
+    },
+    {
+      "gid": 3,
+      "mid": 6
+    },
+    {
+      "gid": 4,
+      "mid": 4
+    },
+    {
+      "gid": 4,
+      "mid": 5
+    }
+  ],
+
+  "MUSCLE_GROUP": [
+    {
+      "id": 1,
+      "name": "Full Body"
+    },
+    {
+      "id": 2,
+      "name": "Lower Body"
+    },
+    {
+      "id": 3,
+      "name": "Upper Body"
+    },
+    {
+      "id": 4,
+      "name": "Arms"
+    }
+  ],  
+
+  "WORKOUTS": [
+    {
+      "id": 1,
+      "Name": "Full Body Strength",
+      "Target_Muscles": "Full Body",
+      "Duration": 60,
+      "Description": "A simple 5x5 strength workout for the full body. "
+    },
+    {
+      "id": 2,
+      "Name": "Upper Body Hypertrophy",
+      "Target_Muscles": "Upper Body",
+      "Duration": 90,
+      "Description": "A hypertrophy workout for the upper body. All rep ranges 8-12. "
+    },
+    {
+      "id": 3,
+      "Name": "Arms Hypertrophy",
+      "Target_Muscles": "Arms",
+      "Duration": 60,
+      "Description": "Time to hit some arms! Pump guaranteed. "
+    }
+  ],
+
+  "WORKOUT_EXERCISES": [
+    {
+      "sets": 5,
+      "reps": 5,
+      "wid": 1,
+      "eid": 1
+    },
+    {
+      "sets": 5,
+      "reps": 5,
+      "wid": 1,
+      "eid": 2
+    },
+    {
+      "sets": 5,
+      "reps": 5,
+      "wid": 1,
+      "eid": 3
+    },
+    {
+      "sets": 5,
+      "reps": 5,
+      "wid": 1,
+      "eid": 4
+    },
+    {
+      "sets": 4,
+      "reps": 8,
+      "wid": 2,
+      "eid": 2
+    },
+    {
+      "sets": 3,
+      "reps": 8,
+      "wid": 2,
+      "eid": 4
+    },
+    {
+      "sets": 4,
+      "reps": 10,
+      "wid": 2,
+      "eid": 5
+    },
+    {
+      "sets": 3,
+      "reps": 10,
+      "wid": 2,
+      "eid": 7
+    },
+    {
+      "sets": 3,
+      "reps": 10,
+      "wid": 2,
+      "eid": 8
+    },
+    {
+      "sets": 3,
+      "reps": 10,
+      "wid": 3,
+      "eid": 4
+    },
+    {
+      "sets": 3,
+      "reps": 10,
+      "wid": 3,
+      "eid": 7
+    },
+    {
+      "sets": 3,
+      "reps": 10,
+      "wid": 3,
+      "eid": 8
+    }
+  ],
+
+  "TRACKED_WORKOUTS": [
+    {
+      "id": 1,
+      "wid": 3,
+      "date_completed": "4/15/2021",
+      "duration": 50
+    }
+  ],
+
+  "TRACKED_SETS": [
+    { 
+      "id": 1,
+      "eid": 4,
+      "tid": 1,
+      "reps": 10,
+      "weight": 75,
+      "difficulty": 6
+    },
+    { 
+      "id": 2,
+      "eid": 4,
+      "tid": 1,
+      "reps": 10,
+      "weight": 75,
+      "difficulty": 6
+    },
+    { 
+      "id": 3,
+      "eid": 4,
+      "tid": 1,
+      "reps": 8,
+      "weight": 95,
+      "difficulty": 9
+    },
+    { 
+      "id": 4,
+      "eid": 7,
+      "tid": 1,
+      "reps": 10,
+      "weight": 50,
+      "difficulty": 5
+    },
+    { 
+      "id": 5,
+      "eid": 7,
+      "tid": 1,
+      "reps": 10,
+      "weight": 60,
+      "difficulty": 7
+    },
+    { 
+      "id": 6,
+      "eid": 7,
+      "tid": 1,
+      "reps": 8,
+      "weight": 70,
+      "difficulty": 9
+    },
+    { 
+      "id": 7,
+      "eid": 8,
+      "tid": 1,
+      "reps": 10,
+      "weight": 50,
+      "difficulty": 7
+    },
+    { 
+      "id": 8,
+      "eid": 8,
+      "tid": 1,
+      "reps": 10,
+      "weight": 50,
+      "difficulty": 7
+    },
+    { 
+      "id": 9,
+      "eid": 8,
+      "tid": 1,
+      "reps": 10,
+      "weight": 50,
+      "difficulty": 7
+    }
+  ]
+}
