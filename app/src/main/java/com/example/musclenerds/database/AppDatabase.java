@@ -32,6 +32,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "musclenerds_DB"; // database name.
     private static AppDatabase sInstance;
 
+
     //Databases are expensive so we don't want to create multiple instances of them.
     //this ensures only one instance is created.
     //always use mDb = AppDatabase.getInstance(getApplicationContext()); to create a context of this.
@@ -41,6 +42,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 Log.d(LOG_TAG, "Creating new database instance");
                 sInstance = Room.databaseBuilder(context.getApplicationContext(),
                         AppDatabase.class, AppDatabase.DATABASE_NAME)
+                        .createFromAsset(DATABASE_NAME)
                         .build();
                 Log.d(LOG_TAG, String.valueOf(sInstance));
             }
