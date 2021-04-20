@@ -4,9 +4,12 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.example.musclenerds.model.Equipment;
 import com.example.musclenerds.model.ExerciseEquipment;
@@ -44,6 +47,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -247,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                                 String name = oneObject.getString("Name");
                                 String type = oneObject.getString("Type");
                                 String desc = oneObject.getString("Description");
-                                Exercise newExercise = new Exercise(id, name, desc, type, "");
+                                Exercise newExercise = new Exercise(id, 1, name, desc, type, "");
                                 Log.d("exercise_log", newExercise.getName());
                                 mDb.exerciseDAO().insert(newExercise);
                             } catch (JSONException e) {
@@ -377,6 +381,57 @@ public class MainActivity extends AppCompatActivity {
                                 // Oops
                             }
                         }
+
+                        //first get all the quotes.
+                        final TextView quoteView = findViewById(R.id.textView5);
+                        final TextView wotd = findViewById(R.id.textView3);
+                        Random rand = new Random();
+                        List<MotivationalQuote> quotes = mDb.quoteDao().getAll();
+                        //get a random number. used to get a random quote from the above list.
+                        int index = rand.nextInt(quotes.size());
+                        //set the text of the desired item, quoteView is defined above.
+                        //quoteView.setText(quotes.get(index).getText());
+
+                        final String fq = quotes.get(index).getText();
+                        new Handler(Looper.getMainLooper()).post(new Runnable(){
+                            @Override
+                            public void run() {
+                                quoteView.setText(fq);
+                            }
+                        });
+
+                        //then we can get a random workout.
+                        //first get a list of all workouts.
+
+                        List<Workout> allWorkouts = mDb.workoutDAO().getAll();
+                        //get a new random number.
+                        index = rand.nextInt(allWorkouts.size() - 1);
+                        //create a list of workout id numbers by getting all workoutExercise items with the matching w_id from the randomly selected workout.
+                        List<WorkoutExercise> allWorkoutExercises = mDb.workoutExerciseDAO().findByW_ID(allWorkouts.get(index).getId());
+                        Log.d("size_log", "workout: \n" + allWorkouts.get(index).getName() + "\nid: " + allWorkouts.get(index).getId());
+
+                        //then make a list of all the exercises from the workoutExercises list.
+                        List<Exercise> allExercises = new ArrayList<Exercise>();
+                        Log.d("size_log", "size: " + allWorkoutExercises.size());
+                        for(int i = 0; i < allWorkoutExercises.size(); i++) {
+                            allExercises.add(mDb.exerciseDAO().findById(allWorkoutExercises.get(i).getE_ID()));
+                        }
+
+                        String wotdText = allWorkouts.get(index).getName() + "\n" + allWorkouts.get(index).getDescription();
+
+                        for(int i = 0; i < allExercises.size(); i++) {
+                            wotdText += "\n- " + allExercises.get(i).getName();
+                        }
+
+                        final String fw = wotdText;
+
+
+                        new Handler(Looper.getMainLooper()).post(new Runnable(){
+                            @Override
+                            public void run() {
+                                wotd.setText(fw);
+                            }
+                        });
 
                     } catch (JSONException e) {
                         e.printStackTrace();

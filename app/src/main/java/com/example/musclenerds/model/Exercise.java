@@ -8,21 +8,24 @@ import androidx.room.PrimaryKey;
 public class Exercise {
     @PrimaryKey(autoGenerate = true)
     int id;
+    int muscleGroupId;
     String name;
     String description;
     String type;
     String video_link;
 
     @Ignore
-    public Exercise(String name, String description, String type, String video_link) {
+    public Exercise(int muscleGroupId, String name, String description, String type, String video_link) {
+        this.muscleGroupId = muscleGroupId;
         this.name = name;
         this.description = description;
         this.type = type;
         this.video_link = video_link;
     }
 
-    public Exercise(int id, String name, String description, String type, String video_link) {
+    public Exercise(int id, int muscleGroupId, String name, String description, String type, String video_link) {
         this.id = id;
+        this.muscleGroupId = muscleGroupId;
         this.name = name;
         this.description = description;
         this.type = type;
