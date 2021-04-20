@@ -72,4 +72,11 @@ public class Exercise {
     public void setVideo_link(String link) {
         this.video_link = link;
     }
+
+    public void setMuscleGroupId (int id) {
+        this.muscleGroupId = id;
+    }
+    public int getMuscleGroupId() {
+        return muscleGroupId;
+    }
 }
