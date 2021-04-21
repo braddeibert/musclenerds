@@ -4,18 +4,18 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "MUSCLEGROUP")
-public class MuscleGroup {
+@Entity(tableName = "MUSCLE")
+public class Muscle {
     @PrimaryKey(autoGenerate = true)
     int id;
     String Name;
 
     @Ignore
-    public MuscleGroup(String Name) {
+    public Muscle(String Name) {
         this.Name = Name;
     }
 
-    public MuscleGroup(int id, String Name) {
+    public Muscle(int id, String Name) {
         this.id = id;
         this.Name = Name;
     }

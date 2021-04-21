@@ -39,8 +39,7 @@ public class HomeFragment extends Fragment {
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.greeting_label);
-        final TextView quoteView = root.findViewById(R.id.textView5);
-        final TextView wotd = root.findViewById(R.id.textView3);
+
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -48,54 +47,11 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        Random rand = new Random();
+
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                //first get all the quotes.
-                List<MotivationalQuote> quotes = mDb.quoteDao().getAll();
-                //get a random number. used to get a random quote from the above list.
-                int index = rand.nextInt(quotes.size());
-                //set the text of the desired item, quoteView is defined above.
-                 //quoteView.setText(quotes.get(index).getText());
 
-                final String fq = quotes.get(index).getText();
-                new Handler(Looper.getMainLooper()).post(new Runnable(){
-                    @Override
-                    public void run() {
-                        quoteView.setText(fq);
-                    }
-                });
-
-                //then we can get a random workout.
-                //first get a list of all workouts.
-                List<Workout> allWorkouts = mDb.workoutDAO().getAll();
-                //get a new random number.
-                index = rand.nextInt(allWorkouts.size() - 1);
-                //create a list of workout id numbers by getting all workoutExercise items with the matching w_id from the randomly selected workout.
-                List<WorkoutExercise> workoutExercises = mDb.workoutExerciseDAO().findByW_ID(allWorkouts.get(index).getId());
-
-                //then make a list of all the exercises from the workoutExercises list.
-                List<Exercise> exercises = new ArrayList<Exercise>();
-                for(int i = 0; i < workoutExercises.size(); i++) {
-                    exercises.add(mDb.exerciseDAO().findById(workoutExercises.get(i).getE_ID()));
-                }
-
-                String wotdText = allWorkouts.get(index).getName() + "\n" + allWorkouts.get(index).getDescription();
-
-                for(int i = 0; i < exercises.size(); i++) {
-                    wotdText += "\n- " + exercises.get(i).getReps() + " " + exercises.get(i).getName();
-                }
-
-                final String fw = wotdText;
-
-
-                new Handler(Looper.getMainLooper()).post(new Runnable(){
-                    @Override
-                    public void run() {
-                        wotd.setText(fw);
-                    }
-                });
             }
         });
         return root;
