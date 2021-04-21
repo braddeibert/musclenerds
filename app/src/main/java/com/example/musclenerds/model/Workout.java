@@ -11,21 +11,21 @@ public class Workout {
     int id;
     String Name;
     String Description;
-    String Target_Muscles;
     int Duration;
+    int muscleGroup;
 
     @Ignore
-    public Workout(String Name, String Description, String Target_Muscles, int Duration){
+    public Workout(String Name, String Description, int Duration, int muscleGroup){
         this.Name = Name;
         this.Description = Description;
-        this.Target_Muscles = Target_Muscles;
+        this.muscleGroup = muscleGroup;
         this.Duration = Duration;
     }
-    public Workout(int id, String Name, String Description, String Target_Muscles, int Duration){
+    public Workout(int id, String Name, String Description, int Duration, int muscleGroup){
         this.id = id;
         this.Name = Name;
         this.Description = Description;
-        this.Target_Muscles = Target_Muscles;
+        this.muscleGroup = muscleGroup;
         this.Duration = Duration;
     }
 
@@ -41,9 +41,9 @@ public class Workout {
 
     public void setDescription(String Description) {this.Description = Description;}
 
-    public String getTarget_Muscles() {return Target_Muscles;}
+    public int getMuscleGroup() {return muscleGroup;}
 
-    public void setTarget_Muscles(String Target_Muscles) {this.Target_Muscles = Target_Muscles;}
+    public void setMuscleGroup(int muscleGroup) {this.muscleGroup = muscleGroup;}
 
     public int getDuration() {return Duration;}
 

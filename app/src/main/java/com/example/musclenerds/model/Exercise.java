@@ -8,33 +8,27 @@ import androidx.room.PrimaryKey;
 public class Exercise {
     @PrimaryKey(autoGenerate = true)
     int id;
+    int muscleGroupId;
     String name;
     String description;
-    String target_muscles;
-    int sets;
-    int reps;
-    String equipment;
+    String type;
     String video_link;
 
     @Ignore
-    public Exercise(String name, String description, String target_muscles, int reps, int sets, String equipment, String video_link) {
+    public Exercise(int muscleGroupId, String name, String description, String type, String video_link) {
+        this.muscleGroupId = muscleGroupId;
         this.name = name;
         this.description = description;
-        this.target_muscles = target_muscles;
-        this.sets = sets;
-        this.reps = reps;
-        this.equipment = equipment;
+        this.type = type;
         this.video_link = video_link;
     }
 
-    public Exercise(int id, String name, String description, String target_muscles, int reps, int sets, String equipment, String video_link) {
+    public Exercise(int id, int muscleGroupId, String name, String description, String type, String video_link) {
         this.id = id;
+        this.muscleGroupId = muscleGroupId;
         this.name = name;
         this.description = description;
-        this.target_muscles = target_muscles;
-        this.sets = sets;
-        this.reps = reps;
-        this.equipment = equipment;
+        this.type = type;
         this.video_link = video_link;
     }
 
@@ -63,36 +57,12 @@ public class Exercise {
         this.description = desc;
     }
 
-    public String getTarget_muscles() {
-        return target_muscles;
+    public String getType() {
+        return type;
     }
 
-    public void setTarget_muscles(String target_muscles) {
-        this.target_muscles = target_muscles;
-    }
-
-    public int getSets() {
-        return sets;
-    }
-
-    public void setSets(int sets) {
-        this.sets = sets;
-    }
-
-    public int getReps() {
-        return reps;
-    }
-
-    public void setReps(int reps) {
-        this.reps = reps;
-    }
-
-    public String getEquipment() {
-        return equipment;
-    }
-
-    public void setEquipment(String equipment) {
-        this.equipment = equipment;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getVideo_link() {
@@ -101,5 +71,12 @@ public class Exercise {
 
     public void setVideo_link(String link) {
         this.video_link = link;
+    }
+
+    public void setMuscleGroupId (int id) {
+        this.muscleGroupId = id;
+    }
+    public int getMuscleGroupId() {
+        return muscleGroupId;
     }
 }

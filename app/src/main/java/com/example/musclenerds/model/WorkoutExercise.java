@@ -10,16 +10,22 @@ public class WorkoutExercise {
     int id;
     int W_ID;
     int E_ID;
+    int sets;
+    int reps;
 
     @Ignore
-    public WorkoutExercise(int W_ID, int E_ID) {
+    public WorkoutExercise(int W_ID, int E_ID, int sets, int reps) {
         this.W_ID = W_ID;
         this.E_ID = E_ID;
+        this.sets = sets;
+        this.reps = reps;
     }
-    public WorkoutExercise(int id, int W_ID, int E_ID) {
+    public WorkoutExercise(int id, int W_ID, int E_ID, int sets, int reps) {
         this.id = id;
         this.W_ID = W_ID;
         this.E_ID = E_ID;
+        this.sets = sets;
+        this.reps = reps;
     }
 
     public int getId() {
@@ -41,5 +47,19 @@ public class WorkoutExercise {
     }
     public void setE_ID(int E_ID) {
         this.E_ID = E_ID;
+    }
+
+    public int getSets() {
+        return sets;
+    }
+    public void setSets(int sets) {
+        this.sets = sets;
+    }
+
+    public int getReps() {
+        return reps;
+    }
+    public void setReps(int reps) {
+        this.reps = reps;
     }
 }
