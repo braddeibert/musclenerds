@@ -1,4 +1,4 @@
-package com.example.musclenerds.model;
+package com.example.musclenerds.ui.exerciseview;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -7,10 +7,10 @@ import com.example.musclenerds.model.Exercise;
 
 //Model for the musclegroup list. This is the scrollable part of the recyclerview
 
-public class WorkoutMuscleGroup {
+public class MuscleExercises {
     public int id;
     public String muscleName;
-    public ArrayList<Workout> workouts = new ArrayList<>();
+    public ArrayList<Exercise> exercises = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -26,11 +26,11 @@ public class WorkoutMuscleGroup {
         this.muscleName = muscleName;
     }
 
-    public ArrayList getWorkouts() {
-        return this.workouts;
+    public ArrayList getExercises() {
+        return this.exercises;
     }
 
-    public void addWorkout(Workout workout) { workouts.add(workout); }
+    public void addExercise(Exercise exercise) { exercises.add(exercise); }
 }
 
 
