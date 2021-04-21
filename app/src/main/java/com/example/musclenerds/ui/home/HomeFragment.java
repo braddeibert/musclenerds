@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment {
                 //get a random number. used to get a random quote from the above list.
                 int index = rand.nextInt(quotes.size());
                 //set the text of the desired item, quoteView is defined above.
-                 //quoteView.setText(quotes.get(index).getText());
+                //quoteView.setText(quotes.get(index).getText());
 
                 final String fq = quotes.get(index).getText();
                 new Handler(Looper.getMainLooper()).post(new Runnable(){
