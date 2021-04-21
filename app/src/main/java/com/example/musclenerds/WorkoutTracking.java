@@ -1,8 +1,9 @@
 package com.example.musclenerds;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -24,14 +25,16 @@ import android.widget.TextView;
 import com.example.musclenerds.database.AppDatabase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.widget.Toolbar;
 
-public class WorkoutTracking extends AppCompatActivity {
+public class WorkoutTracking extends MainActivity {
 
     private Chronometer stopwatch;
     private long pauseOffset;
     private boolean running;
 
-    private AppBarConfiguration mAppBarConfiguration;
+    public AppBarConfiguration mAppBarConfiguration;
     private AppDatabase mDb; // make a reference to the database.
 
     Button weightDialog;
@@ -41,13 +44,18 @@ public class WorkoutTracking extends AppCompatActivity {
     int weightCount = 0;
     int repsCount = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_tracking);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        stopwatch = findViewById(R.id.stopwatch);
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        BottomNavigationView bottomNavView = findViewById(R.id.bottom_navigation_view);
 
         stopwatch = findViewById(R.id.stopwatch);
 
@@ -59,8 +67,56 @@ public class WorkoutTracking extends AppCompatActivity {
 
         weightDialog.setOnClickListener(view -> showWeightDialog());
         repsDialog.setOnClickListener(view -> showRepsDialog());
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.drawer_home, R.id.drawer_workouts, R.id.drawer_exercises, R.id.drawer_tracking, R.id.drawer_history)
+                .setDrawerLayout(drawer)
+                .build();
+        //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        //NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        //NavigationUI.setupWithNavController(navigationView, navController);
+        //NavigationUI.setupWithNavController(bottomNavView, navController);
+
+        bottomNavView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.drawer_home:
+                    Intent intent1 = new Intent(WorkoutTracking.this, MainActivity.class);
+                    startActivity(intent1);
+                case R.id.drawer_exercises:
+                    Intent intent2 = new Intent(WorkoutTracking.this, MainActivity.class);
+                    startActivity(intent2);
+                case R.id.drawer_workouts:
+                    Intent intent3 = new Intent(WorkoutTracking.this, MainActivity.class);
+                    startActivity(intent3);
+                case R.id.drawer_history:
+                    Intent intent4 = new Intent(WorkoutTracking.this, MainActivity.class);
+                    startActivity(intent4);
+
+                    break;
+            }
 
 
+            return false;
+        });
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putBoolean("running", running);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+
+        running = prefs.getBoolean("running", false);
     }
 
     public void startStopwatch(View v) {
@@ -228,3 +284,4 @@ public class WorkoutTracking extends AppCompatActivity {
     }
 
 }
+
