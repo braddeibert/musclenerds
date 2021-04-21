@@ -10,6 +10,8 @@
 
     <!-- NAVIGATION DRAWER ITEMS -->
     <string name="menu_home">Home</string>
+
+    <string name="button_view_workout">ViewWorkout</string>
     <string name="menu_workouts">Workout Catalog</string>
     <string name="menu_exercises">Exercise Library</string>
     <string name="menu_tracking">Track Workout</string>

@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         mDb.exerciseDAO().insert(newExercise);
 
         newExercise = new Exercise(
-                "Squats",
+                "Squat",
                 "",
                 "Legs",
                 20,
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         mDb.exerciseDAO().insert(newExercise);
 
         newExercise = new Exercise(
-                "Lunges",
+                "Lunge",
                 "",
                 "Legs",
                 20,
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         mDb.exerciseDAO().insert(newExercise);
 
         newExercise = new Exercise(
-                "Jumping Jacks",
+                "Jumping Jack",
                 "",
                 "",
                 30,
