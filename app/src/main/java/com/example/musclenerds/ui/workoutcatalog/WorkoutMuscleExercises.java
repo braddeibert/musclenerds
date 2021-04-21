@@ -8,7 +8,7 @@ import com.example.musclenerds.model.Workout;
 
 //Model for the musclegroup list. This is the scrollable part of the recyclerview
 
-public class WorkoutMuscleGroup {
+public class WorkoutMuscleExercises {
     public int id;
     public String muscleName;
     public ArrayList<Workout> workouts = new ArrayList<>();

@@ -14,7 +14,12 @@ import com.example.musclenerds.R;
 import com.example.musclenerds.database.AppDatabase;
 import com.example.musclenerds.database.AppExecutors;
 import com.example.musclenerds.model.Exercise;
+import com.example.musclenerds.model.Muscle;
+import com.example.musclenerds.model.MuscleGroup;
+import com.example.musclenerds.model.MuscleGroups;
+import com.example.musclenerds.model.Workout;
 import com.example.musclenerds.ui.exerciseview.Adapters.MuscleGroupAdapter;
+import com.example.musclenerds.ui.workoutcatalog.WorkoutMuscleExercises;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +35,9 @@ public class ExerciseViewFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.exercise_view_fragment, container, false);
 
-        ArrayList<MuscleGroup> muscleGroups = prepareData();
+        ArrayList<MuscleExercises> muscleExercises = prepareData();
 
-        MuscleGroupAdapter muscleGroupAdapter = new MuscleGroupAdapter(muscleGroups, view.getContext());
+        MuscleGroupAdapter muscleGroupAdapter = new MuscleGroupAdapter(muscleExercises, view.getContext());
 
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
 
@@ -49,53 +54,59 @@ public class ExerciseViewFragment extends Fragment {
 
     //Creates the data to be displayed in the recyclerview, a list of muscles with a list of exercises.
 
-    private ArrayList<MuscleGroup> prepareData() {
+    private ArrayList<MuscleExercises> prepareData() {
 
-        ArrayList<MuscleGroup> muscles = new ArrayList<MuscleGroup>();
+        ArrayList<MuscleExercises> muscles = new ArrayList<>();
 
         // create a background thread.
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                // create a list of exercises.
-                // Use the type of Exercise defined in the database though.
+                // create a list of workouts.
+                // Use the type of Workout defined in the database though.
 
-                //Muscle group with an array of exercises.
+                //Muscle group with an array of workouts.
                 List<Exercise> exercises = mDb.exerciseDAO().getAll();
+                List<MuscleGroup> muscleGroups = mDb.muscleGroupDAO().getAll();
 
-                //List of muscle names so we can keep track of which ones have already been added
-                //Kind of a hot fix, this could be solved quicker if we manipulated the
-                //query calls a little bit, right now it's just working with a list of all the exercises, but we
-                //could instead make a query call for one of each muscle_name, add those to a list, then for each
-                //item in that list query all the exercises and add all the matching ones for each item. Maybe
-                //I'll get on this right now, but I'm not really sure how to change up the query calls.
+                ArrayList<MuscleGroup> uniqueMuscleGroups = new ArrayList<>();
 
-                //SELECT DISTINCT target_muscles FROM Exercises; would work in mySQL for one of each.
-                ArrayList<String> muscleNames = new ArrayList<>();
+                //Make a list of unique muscleGroups.
+                for(int i = 0; i < muscleGroups.size(); i++){
+                    MuscleGroup currentGroup = muscleGroups.get(i);
 
-                //Iterate through all exercises
-                for (int i = 0; i < exercises.size(); i++) {
-
-                    MuscleGroup muscleGroup = new MuscleGroup();
-
-                    //Set name and ID to exercise name and ID
-                    muscleGroup.setId(exercises.get(i).getId());
-                    muscleGroup.setName(exercises.get(i).getTarget_muscles());
-
-                    //Add all the exercises that have the same muscle group to the musclegroup list.
-                    if(!muscleNames.contains(exercises.get(i).getTarget_muscles())){
-                        for (int j = 0; j < exercises.size(); j++) {
-                            if (exercises.get(j).getTarget_muscles().equals(muscleGroup.getName())) {
-                                muscleGroup.addExercise(exercises.get(j));
-                            }
-                        }
-
-                        muscleNames.add(exercises.get(i).getTarget_muscles());
-                        muscles.add(muscleGroup);
+                    if(!uniqueMuscleGroups.contains(currentGroup)){
+                        uniqueMuscleGroups.add(currentGroup);
                     }
+                }
+
+                //For each unique MuscleGroup, create a MuscleExercise with the name of the
+                //MuscleGroup, and add each exercise with that MuscleGroupID to the MuscleExercise.
+                for(int i = 0; i < muscleGroups.size(); i++) {
+                    MuscleExercises muscleExercise = new MuscleExercises();
+                    ArrayList<String> exerciseNames = new ArrayList<>();
+
+                    muscleExercise.setName(muscleGroups.get(i).getName());
+
+
+                    //Add the exercises to the musclegroup
+                    for(int j = 0; j < exercises.size(); j++){
+
+                        if(exercises.get(j).getMuscleGroupId() == muscleGroups.get(i).getId()){
+
+                            if(!exerciseNames.contains(exercises.get(j).getName())){
+                                muscleExercise.addExercise(exercises.get(j));
+                                exerciseNames.add(exercises.get(j).getName());
+                            }
+
+                        }
+                    }
+                    //Add the MuscleExercises to an array to be set in the Adapters.
+                    muscles.add(muscleExercise);
                 }
             }
         });
+        //List of MuscleGroups with their respective exercises.
         return muscles;
         }
     }

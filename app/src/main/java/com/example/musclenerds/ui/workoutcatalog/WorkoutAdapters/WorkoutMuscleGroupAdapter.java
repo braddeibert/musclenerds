@@ -10,18 +10,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musclenerds.R;
-import com.example.musclenerds.ui.workoutcatalog.WorkoutMuscleGroup;
+import com.example.musclenerds.ui.workoutcatalog.WorkoutMuscleExercises;
 
 import java.util.ArrayList;
 
 public class WorkoutMuscleGroupAdapter extends RecyclerView.Adapter<WorkoutMuscleGroupAdapter.ViewHolder>{
 
-    public ArrayList<WorkoutMuscleGroup> muscleGroups;
+    public ArrayList<WorkoutMuscleExercises> muscleGroups;
     private Context context;
     private LayoutInflater layoutInflater;
 
 
-    public WorkoutMuscleGroupAdapter(ArrayList<WorkoutMuscleGroup> muscleGroups, Context context) {
+    public WorkoutMuscleGroupAdapter(ArrayList<WorkoutMuscleExercises> muscleGroups, Context context) {
         this.muscleGroups = muscleGroups;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
@@ -39,7 +39,7 @@ public class WorkoutMuscleGroupAdapter extends RecyclerView.Adapter<WorkoutMuscl
         holder.recyclerView.setAdapter(new WorkoutAdapter(context, muscleGroups.get(position).workouts));
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         holder.recyclerView.setHasFixedSize(true);
-        holder.tvHeading.setText(muscleGroups.get(position).muscleName);
+        holder.tvHeading.setText(String.valueOf(muscleGroups.get(position).muscleName));
     }
 
 
