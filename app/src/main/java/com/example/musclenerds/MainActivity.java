@@ -1,11 +1,23 @@
 package com.example.musclenerds;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
-
+import com.example.musclenerds.model.Equipment;
+import com.example.musclenerds.model.ExerciseEquipment;
+import com.example.musclenerds.model.Muscle;
+import com.example.musclenerds.model.MuscleGroup;
+import com.example.musclenerds.model.MuscleGroups;
+import com.example.musclenerds.model.TrackedSet;
+import com.example.musclenerds.model.TrackedWorkout;
 import com.example.musclenerds.model.Workout;
 import com.example.musclenerds.model.WorkoutExercise;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,6 +36,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -35,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,19 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDb = AppDatabase.getInstance(getApplicationContext()); // let the database handle creating a singleton instance. Must be done in an activity or something that extends an activity.
 
-        //then use the executor to handle the execution.
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                //let's just refresh the static data every time.
-                //see functions at bottom of file.
-                //refreshDatabase();
-                refreshDatabase();
 
-
-                //mDb.clearAllTables();
-            }
-        });
     }
 
     @Override
@@ -83,157 +96,5 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-
-    public void getQuote(View view) {
-        Random rand = new Random();
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                List<MotivationalQuote> quotes = mDb.quoteDao().getAll(); //get all quotes.
-                int index = rand.nextInt(quotes.size());
-                Snackbar.make(view, "' " + quotes.get(index).getText() + "' --" + quotes.get(index).getAuthor(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
-
-    // Following functions are for generating static data in the database.
-    public void generateQuotes() {
-        MotivationalQuote newQuote = new MotivationalQuote("Today I will do what others won’t, so tomorrow I can accomplish what others can’t.", "Jerry Rice");
-        mDb.quoteDao().insert(newQuote); // insert a quote.
-
-        newQuote = new MotivationalQuote("Do something today that your future self will thank you for.", "Unknown");
-        mDb.quoteDao().insert(newQuote); // insert a quote.
-
-        newQuote = new MotivationalQuote("We are what we repeatedly do. Excellence then is not an act but a habit.", "Aristotle");
-        mDb.quoteDao().insert(newQuote); // insert a quote.
-
-        newQuote = new MotivationalQuote("No matter how slow you go, you are still lapping everybody on the couch.", "Unknown");
-        mDb.quoteDao().insert(newQuote); // insert a quote.
-
-        newQuote = new MotivationalQuote("Sweat is fat crying.", "Unknown");
-        mDb.quoteDao().insert(newQuote); // insert a quote.
-    }
-
-    public void generateExercises() {
-        Workout newWorkout = new Workout("Beginner Bodyweight Workout", "An easy workout for beginners using only bodyweight", "Full Body", 20);
-        mDb.workoutDAO().insert(newWorkout);
-        newWorkout = new Workout("20 minute workout", "A quick workout for people with limited time.", "Full Body", 20);
-        mDb.workoutDAO().insert(newWorkout);
-        newWorkout = mDb.workoutDAO().getAll().get(0);
-
-        Exercise newExercise = new Exercise(
-                "Sit-Up",
-                "Lie down on your back. bend your legs and stabalize your lower bodey. Cross your hands to opposite shoulders, or place them behind your ears without pulling on your neck. Lift your head and shoulder blades from the ground, Exhale as you rise. Lower, returning to your starting point, exhale as you lower. Repeat.",
-                "abdominal muscles",
-                4,
-                5,
-                "none",
-                "none for now");
-        mDb.exerciseDAO().insert(newExercise);
-
-        newExercise = new Exercise(
-                "Push-Up",
-                "Get down on all fours, placing your hands slightly wider than your shoulders. Straighten your arms and legs. Lower your body until your chest nearly touches the floor. Pause, then push yourself back up. Repeat.",
-                "triceps",
-                4,
-                5,
-                "none",
-                "none for now");
-        mDb.exerciseDAO().insert(newExercise);
-
-        newExercise = new Exercise(
-                "Squat",
-                "",
-                "Legs",
-                20,
-                1,
-                "none",
-                "none for now");
-        mDb.exerciseDAO().insert(newExercise);
-
-        newExercise = new Exercise(
-                "Lunge",
-                "",
-                "Legs",
-                20,
-                1,
-                "none",
-                "none for now");
-        mDb.exerciseDAO().insert(newExercise);
-
-        newExercise = new Exercise(
-                "Plank",
-                "",
-                "abs",
-                15,
-                0,
-                "none",
-                "none for now");
-        mDb.exerciseDAO().insert(newExercise);
-
-        newExercise = new Exercise(
-                "Jumping Jack",
-                "",
-                "",
-                30,
-                1,
-                "none",
-                "none for now");
-        mDb.exerciseDAO().insert(newExercise);
-
-        // let's get a list of all workouts on the database so far.
-        // then we can iterate through the list and link each exercise to the workout we created earlier.
-        // these links are represented as entities in the WorkoutExercise table.
-        List<Exercise> allExercises = mDb.exerciseDAO().getAll();
-        for(int i = 0; i < allExercises.size(); i++) {
-            WorkoutExercise newWorkoutExercise = new WorkoutExercise(newWorkout.getId(), allExercises.get(i).getId());
-            mDb.workoutExerciseDAO().insert(newWorkoutExercise);
-        }
-
-    }
-
-    public void refreshDatabase() {
-        List<MotivationalQuote> quotes = mDb.quoteDao().getAll();
-        List<Exercise> exercises = mDb.exerciseDAO().getAll();
-        List<Workout> workouts = mDb.workoutDAO().getAll();
-        List<WorkoutExercise> workoutExercises = mDb.workoutExerciseDAO().getAll();
-
-        if(quotes.size() > 0)
-        for(int i = 0; i < quotes.size(); i++) {
-            mDb.quoteDao().delete(quotes.get(i));
-        }
-
-        if(exercises.size() > 0)
-        for(int i = 0; i < exercises.size(); i++) {
-            mDb.exerciseDAO().delete(exercises.get(i));
-        }
-
-        if(workoutExercises.size() > 0)
-            for(int i = 0; i < workoutExercises.size(); i++) {
-                mDb.workoutExerciseDAO().delete(workoutExercises.get(i));
-            }
-
-        if(workouts.size() > 0)
-            for(int i = 0; i < workouts.size(); i++) {
-                mDb.workoutDAO().delete(workouts.get(i));
-            }
-
-        generateQuotes();
-        generateExercises();
-
-        quotes = mDb.quoteDao().getAll();
-        exercises = mDb.exerciseDAO().getAll();
-
-        Log.d("AppData_LOG", "Fetched " + quotes.size() + " quotes:");
-        for(int i = 0; i < quotes.size(); i++) {
-            Log.d("AppData_LOG", "id: " + quotes.get(i).getId() + " text: " + quotes.get(i).getText());
-        }
-
-        Log.d("AppData_LOG", "Fetched " + exercises.size() + " exercises:");
-        for(int i = 0; i < exercises.size(); i++) {
-            Log.d("AppData_LOG", "id: " + exercises.get(i).getId() + " name: " + exercises.get(i).getName());
-        }
     }
 }
