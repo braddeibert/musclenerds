@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.musclenerds"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -38,8 +38,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
     implementation 'androidx.recyclerview:recyclerview:1.2.0-beta02'
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.23'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     testImplementation 'junit:junit:4.+'

@@ -1,4 +1,4 @@
-package com.example.musclenerds.ui.Adapters;
+package com.example.musclenerds.ui.workoutcatalog.WorkoutAdapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,19 +10,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musclenerds.R;
-import com.example.musclenerds.ui.models.Exercise;
-import com.example.musclenerds.ui.models.MuscleGroup;
+import com.example.musclenerds.model.MuscleGroup;
+import com.example.musclenerds.model.WorkoutMuscleGroup;
 
 import java.util.ArrayList;
 
-public class MuscleGroupAdapter extends RecyclerView.Adapter<MuscleGroupAdapter.ViewHolder>{
+public class WorkoutMuscleGroupAdapter extends RecyclerView.Adapter<WorkoutMuscleGroupAdapter.ViewHolder>{
 
-    public ArrayList<MuscleGroup> muscleGroups;
+    public ArrayList<WorkoutMuscleGroup> muscleGroups;
     private Context context;
     private LayoutInflater layoutInflater;
 
 
-    public MuscleGroupAdapter(ArrayList<MuscleGroup> muscleGroups, Context context) {
+    public WorkoutMuscleGroupAdapter(ArrayList<WorkoutMuscleGroup> muscleGroups, Context context) {
         this.muscleGroups = muscleGroups;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
@@ -31,13 +31,13 @@ public class MuscleGroupAdapter extends RecyclerView.Adapter<MuscleGroupAdapter.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View view = layoutInflater.inflate(R.layout.single_muscle_group, parent, false);
+        View view = layoutInflater.inflate(R.layout.single_workout_muscle_group, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
-        holder.recyclerView.setAdapter(new ExerciseAdapter(context, muscleGroups.get(position).exercises));
+        holder.recyclerView.setAdapter(new WorkoutAdapter(context, muscleGroups.get(position).workouts));
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         holder.recyclerView.setHasFixedSize(true);
         holder.tvHeading.setText(muscleGroups.get(position).muscleName);
@@ -55,8 +55,8 @@ public class MuscleGroupAdapter extends RecyclerView.Adapter<MuscleGroupAdapter.
 
         public ViewHolder(View itemView) {
             super(itemView);
-            recyclerView = (RecyclerView) itemView.findViewById(R.id.rvExercises);
-            tvHeading = (TextView) itemView.findViewById(R.id.tvMuscleName);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.rvWorkouts);
+            tvHeading = (TextView) itemView.findViewById(R.id.tvWorkoutMuscleName);
         }
     }
 
