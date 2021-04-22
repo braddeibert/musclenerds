@@ -19,7 +19,6 @@ import com.example.musclenerds.model.MuscleGroup;
 import com.example.musclenerds.model.MuscleGroups;
 import com.example.musclenerds.model.Workout;
 import com.example.musclenerds.ui.exerciseview.Adapters.MuscleGroupAdapter;
-import com.example.musclenerds.ui.workoutcatalog.WorkoutMuscleExercises;
 
 import java.util.ArrayList;
 import java.util.List;
