@@ -12,10 +12,9 @@
     <string name="menu_home">Home</string>
 
     <string name="button_view_workout">ViewWorkout</string>
-    <string name="menu_workouts">Workout Catalog</string>
-    <string name="menu_exercises">Exercise Library</string>
-    <string name="menu_tracking">Track Workout</string>
-    <string name="menu_history">Workout History</string>
+    <string name="menu_workouts">Workouts</string>
+    <string name="menu_exercises">Exercises</string>
+    <string name="menu_history">History</string>
 
     <string name="home_greeting">Welcome, *username*!</string>
 
