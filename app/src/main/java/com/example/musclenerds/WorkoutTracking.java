@@ -335,7 +335,7 @@ public class WorkoutTracking extends MainActivity {
 
         TextView currentName = currentDialog.findViewById(R.id.textView17);
         TextView currentDescription = currentDialog.findViewById(R.id.textView15);
-        TextView currentMuscles = currentDialog.findViewById(R.id.textView16);
+        TextView currentType = currentDialog.findViewById(R.id.textView16);
 
         AppDatabase mDb = AppDatabase.getInstance(getBaseContext());
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
@@ -346,13 +346,14 @@ public class WorkoutTracking extends MainActivity {
                 Log.d("size_log", "id: " + exercise.getName());
                 final String cName = exercise.getName();
                 final String cDesc = exercise.getDescription();
-                //final String cMusc = exercise.getMuscleGroupId();
+                final String cType = exercise.getType();
 
                 new Handler(Looper.getMainLooper()).post(new Runnable(){
                     @Override
                     public void run() {
                         currentName.setText(cName);
                         currentDescription.setText(cDesc);
+                        currentType.setText(cType);
 
 
                     }
@@ -371,7 +372,7 @@ public class WorkoutTracking extends MainActivity {
 
         TextView upNextName = upNextDialog.findViewById(R.id.textView17);
         TextView upNextDescription = upNextDialog.findViewById(R.id.textView15);
-        TextView upNextMuscles = upNextDialog.findViewById(R.id.textView16);
+        TextView upNextType = upNextDialog.findViewById(R.id.textView16);
 
         AppDatabase mDb = AppDatabase.getInstance(getBaseContext());
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
@@ -381,13 +382,14 @@ public class WorkoutTracking extends MainActivity {
                 Log.d("size_log", "id: " + exercise);
                 final String uNName = exercise.getName();
                 final String uNDesc = exercise.getDescription();
-                //final String cMusc = exercise.getMuscleGroupId();
+                final String uNType = exercise.getType();
 
                 new Handler(Looper.getMainLooper()).post(new Runnable(){
                     @Override
                     public void run() {
                         upNextName.setText(uNName);
                         upNextDescription.setText(uNDesc);
+                        upNextType.setText(uNType);
 
                     }
                 });
