@@ -35,13 +35,7 @@ public class WorkoutHistory extends Fragment implements View.OnClickListener{
         // Required empty public constructor
     }
 
-//    public void onClick(View v){
-//        Intent intent = new Intent(this, DisplayMessageActivity.class);
-//        EditText editText = (EditText) findViewById(R.id.editText);
-//        String message = editText.getText().toString();
-//        intent.putExtra(EXTRA_MESSAGE, message);
-//        startActivity(intent);
-//    }
+
 
     /**
      * Use this factory method to create a new instance of
