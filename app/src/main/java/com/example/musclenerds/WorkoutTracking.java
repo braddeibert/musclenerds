@@ -1,36 +1,44 @@
 package com.example.musclenerds;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+
 import com.example.musclenerds.database.AppDatabase;
+import com.example.musclenerds.database.AppExecutors;
+import com.example.musclenerds.model.Exercise;
+import com.example.musclenerds.model.Workout;
+import com.example.musclenerds.model.WorkoutExercise;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.widget.Toolbar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorkoutTracking extends MainActivity {
 
     private Chronometer stopwatch;
+    private Chronometer timer;
     private long pauseOffset;
     private boolean running;
 
@@ -43,7 +51,14 @@ public class WorkoutTracking extends MainActivity {
     TextView repsDisplay;
     int weightCount = 0;
     int repsCount = 0;
+    ImageButton current_exercise_image;
+    ImageButton up_next_exercise_image;
+    TextView current_exercise_name;
+    TextView up_next_exercise_name;
+    int currentExercise = 1;
+    int workoutId = 1;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,12 +67,11 @@ public class WorkoutTracking extends MainActivity {
         setSupportActionBar(toolbar);
 
         stopwatch = findViewById(R.id.stopwatch);
+        timer = findViewById(R.id.timer);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         BottomNavigationView bottomNavView = findViewById(R.id.bottom_navigation_view);
-
-        stopwatch = findViewById(R.id.stopwatch);
 
         weightDialog = findViewById(R.id.weightDialog);
         weightDisplay = findViewById(R.id.weightDisplay);
@@ -67,6 +81,17 @@ public class WorkoutTracking extends MainActivity {
 
         weightDialog.setOnClickListener(view -> showWeightDialog());
         repsDialog.setOnClickListener(view -> showRepsDialog());
+
+        current_exercise_name = findViewById(R.id.current_exercise_name);
+        current_exercise_image = findViewById(R.id.current_exercise_image);
+        current_exercise_image.setOnClickListener(view -> showCurrentExercise());
+
+        up_next_exercise_name = findViewById(R.id.up_next_exercise_name);
+        up_next_exercise_image = findViewById(R.id.up_next_exercise_image);
+        up_next_exercise_image.setOnClickListener(view -> showUpNextExercise());
+
+        timer.start();
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.drawer_home, R.id.drawer_workouts, R.id.drawer_exercises, R.id.drawer_tracking, R.id.drawer_history)
                 .setDrawerLayout(drawer)
@@ -98,6 +123,22 @@ public class WorkoutTracking extends MainActivity {
             return false;
         });
 
+        AppDatabase mDb = AppDatabase.getInstance(getBaseContext());
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                List<WorkoutExercise> exercises = mDb.workoutExerciseDAO().findByW_ID(workoutId);
+                Log.d("size_log", "" + exercises);
+
+                List<Exercise> exercisesFromWorkout = new ArrayList<>();
+                for (int i = 0; i < exercises.size(); i++) {
+                    exercisesFromWorkout.add(mDb.exerciseDAO().findById(exercises.get(i).getE_ID()));
+                }
+                Log.d("size_log", "exercises: " + exercisesFromWorkout);
+
+
+            }
+        });
     }
 
     @Override
@@ -283,5 +324,74 @@ public class WorkoutTracking extends MainActivity {
         repsDisplay.setText(String.format(getString(R.string.reps_info), repsEntered));
     }
 
+    void showCurrentExercise() {
+        final Dialog currentDialog = new Dialog(WorkoutTracking.this);
+        currentDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        currentDialog.setCancelable(true);
+        currentDialog.setContentView(R.layout.tracking_exercise_dialog);
+
+        TextView currentName = currentDialog.findViewById(R.id.textView17);
+        TextView currentDescription = currentDialog.findViewById(R.id.textView15);
+        TextView currentMuscles = currentDialog.findViewById(R.id.textView16);
+
+        AppDatabase mDb = AppDatabase.getInstance(getBaseContext());
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Exercise exercise =  mDb.exerciseDAO().findById(currentExercise);
+                //List<WorkoutExercise> workoutExercises = mDb.workoutExerciseDAO().findByW_ID(allExercises.get(1).getId());
+                Log.d("size_log", "id: " + exercise.getName());
+                final String cName = exercise.getName();
+                final String cDesc = exercise.getDescription();
+                //final String cMusc = exercise.getMuscleGroupId();
+
+                new Handler(Looper.getMainLooper()).post(new Runnable(){
+                    @Override
+                    public void run() {
+                        currentName.setText(cName);
+                        currentDescription.setText(cDesc);
+
+
+                    }
+                });
+            }
+        });
+
+        currentDialog.show();
+    }
+
+    void showUpNextExercise() {
+        final Dialog upNextDialog = new Dialog(WorkoutTracking.this);
+        upNextDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        upNextDialog.setCancelable(true);
+        upNextDialog.setContentView(R.layout.tracking_exercise_dialog);
+
+        TextView upNextName = upNextDialog.findViewById(R.id.textView17);
+        TextView upNextDescription = upNextDialog.findViewById(R.id.textView15);
+        TextView upNextMuscles = upNextDialog.findViewById(R.id.textView16);
+
+        AppDatabase mDb = AppDatabase.getInstance(getBaseContext());
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Exercise exercise =  mDb.exerciseDAO().findById(currentExercise + 1);
+                Log.d("size_log", "id: " + exercise);
+                final String uNName = exercise.getName();
+                final String uNDesc = exercise.getDescription();
+                //final String cMusc = exercise.getMuscleGroupId();
+
+                new Handler(Looper.getMainLooper()).post(new Runnable(){
+                    @Override
+                    public void run() {
+                        upNextName.setText(uNName);
+                        upNextDescription.setText(uNDesc);
+
+                    }
+                });
+            }
+        });
+
+        upNextDialog.show();
+    }
 }
 
