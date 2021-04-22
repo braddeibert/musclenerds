@@ -47,8 +47,8 @@ public class WorkoutFragment extends Fragment {
         trackWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // launch tracking activity with the workout here
                 Intent intent = new Intent(getContext(), WorkoutTracking.class);
+                intent.putExtra("workoutId", workout.getId());
                 startActivity(intent);
             }
         });

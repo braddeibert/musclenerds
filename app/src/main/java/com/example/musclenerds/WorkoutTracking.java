@@ -51,12 +51,10 @@ public class WorkoutTracking extends MainActivity {
     TextView repsDisplay;
     int weightCount = 0;
     int repsCount = 0;
-    ImageButton current_exercise_image;
+    TextView current_exercise_text;
     ImageButton up_next_exercise_image;
-    TextView current_exercise_name;
-    TextView up_next_exercise_name;
     int currentExercise = 1;
-    int workoutId = 1;
+    private int workoutId;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -82,11 +80,9 @@ public class WorkoutTracking extends MainActivity {
         weightDialog.setOnClickListener(view -> showWeightDialog());
         repsDialog.setOnClickListener(view -> showRepsDialog());
 
-        current_exercise_name = findViewById(R.id.current_exercise_name);
-        current_exercise_image = findViewById(R.id.current_exercise_image);
-        current_exercise_image.setOnClickListener(view -> showCurrentExercise());
+        current_exercise_text = findViewById(R.id.current_exercise_text);
+        current_exercise_text.setOnClickListener(view -> showCurrentExercise());
 
-        up_next_exercise_name = findViewById(R.id.up_next_exercise_name);
         up_next_exercise_image = findViewById(R.id.up_next_exercise_image);
         up_next_exercise_image.setOnClickListener(view -> showUpNextExercise());
 
@@ -119,9 +115,15 @@ public class WorkoutTracking extends MainActivity {
                     break;
             }
 
-
             return false;
         });
+
+        Bundle extras = getIntent().getExtras();
+
+        // get workout to track if passed from workout catalog "start" button
+        if (extras != null) {
+            workoutId = extras.getInt("workoutId");
+        }
 
         AppDatabase mDb = AppDatabase.getInstance(getBaseContext());
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
@@ -134,11 +136,18 @@ public class WorkoutTracking extends MainActivity {
                 for (int i = 0; i < exercises.size(); i++) {
                     exercisesFromWorkout.add(mDb.exerciseDAO().findById(exercises.get(i).getE_ID()));
                 }
-                Log.d("size_log", "exercises: " + exercisesFromWorkout);
 
+                new Handler(Looper.getMainLooper()).post(new Runnable(){
+                    @Override
+                    public void run() {
+                        String currentExerciseInfo = exercisesFromWorkout.get(0).getName() + ":\n" + "Sets: " + exercises.get(0).getSets() + "\nReps: " + exercises.get(0).getReps();
+                        current_exercise_text.setText(currentExerciseInfo);
+                    }
+                });
 
             }
         });
+
     }
 
     @Override
