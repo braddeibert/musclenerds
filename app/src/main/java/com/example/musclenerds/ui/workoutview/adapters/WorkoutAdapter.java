@@ -1,4 +1,4 @@
-package com.example.musclenerds.ui.Adapters;
+package com.example.musclenerds.ui.workoutview.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +39,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.text_row_item, viewGroup, false);
+                .inflate(R.layout.single_workout, viewGroup, false);
 
         return new ViewHolder(view);
     }

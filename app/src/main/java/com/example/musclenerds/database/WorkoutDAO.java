@@ -34,4 +34,7 @@ public interface WorkoutDAO {
     @Query("SELECT * FROM WORKOUT WHERE id = :id")
     Workout findById(int id);
 
+    @Query("SELECT * FROM WORKOUT WHERE muscleGroup = :mg_id")
+    List<Workout> findByMuscleGroupId(int mg_id);
+
 }
