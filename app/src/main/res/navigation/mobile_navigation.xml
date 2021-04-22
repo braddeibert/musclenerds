@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/drawer_workouts"
-        android:name="com.example.musclenerds.ui.workoutcatalog.WorkoutCatalogFragment"
+        android:name="com.example.musclenerds.ui.workoutview.WorkoutCatalogFragment"
         android:label="@string/menu_workouts"
         tools:layout="@layout/workout_catalog_fragment" />
 

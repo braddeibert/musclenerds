@@ -1,4 +1,5 @@
 package com.example.musclenerds.database;
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -32,4 +33,8 @@ public interface WorkoutDAO {
 
     @Query("SELECT * FROM WORKOUT WHERE id = :id")
     Workout findById(int id);
+
+    @Query("SELECT * FROM WORKOUT WHERE muscleGroup = :mg_id")
+    List<Workout> findByMuscleGroupId(int mg_id);
+
 }
