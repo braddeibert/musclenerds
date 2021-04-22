@@ -1,14 +1,21 @@
 package com.example.musclenerds.ui.workoutview.adapters;
 
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musclenerds.R;
 import com.example.musclenerds.model.Workout;
+import com.example.musclenerds.ui.workoutview.WorkoutFragment;
 
 import java.util.List;
 
@@ -50,6 +57,17 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.getTextView().setText(workouts.get(position).getName());
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                Fragment workoutFragment = new WorkoutFragment(workouts.get(position));
+                FragmentManager fragManager = activity.getSupportFragmentManager();
+
+                fragManager.beginTransaction().replace(R.id.workout_catalog_view, workoutFragment).addToBackStack(null).commit();
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
