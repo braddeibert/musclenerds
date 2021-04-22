@@ -6,20 +6,20 @@
     android:layout_height="wrap_content">
 
     <ImageButton
-        android:id="@+id/up_next_exercise_image"
-        android:layout_width="242dp"
-        android:layout_height="90dp"
+        android:id="@+id/current_exercise_image"
+        android:layout_width="184dp"
+        android:layout_height="93dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/up_next_exercise_name"
+        android:id="@+id/current_exercise_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/up_next_exercise_image"
+        app:layout_constraintBottom_toTopOf="@+id/current_exercise_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
