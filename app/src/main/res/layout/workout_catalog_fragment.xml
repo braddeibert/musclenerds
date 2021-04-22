@@ -5,8 +5,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:orientation="vertical"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:id="@+id/workout_catalog_view"
-tools:conext="workout_catalog_view">
+android:id="@+id/workout_catalog_view">
 
 <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/recyclerView"
