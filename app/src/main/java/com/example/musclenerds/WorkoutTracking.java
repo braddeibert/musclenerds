@@ -20,7 +20,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 
@@ -50,7 +49,7 @@ public class WorkoutTracking extends MainActivity {
     int weightCount = 0;
     int repsCount = 0;
     TextView current_exercise_text;
-    ImageButton up_next_exercise_image;
+    TextView up_next_exercise_text;
     int currentExercise = 1;
     private int workoutId;
 
@@ -80,8 +79,8 @@ public class WorkoutTracking extends MainActivity {
         current_exercise_text = findViewById(R.id.current_exercise_text);
         current_exercise_text.setOnClickListener(view -> showCurrentExercise());
 
-        up_next_exercise_image = findViewById(R.id.up_next_exercise_image);
-        up_next_exercise_image.setOnClickListener(view -> showUpNextExercise());
+        up_next_exercise_text = findViewById(R.id.up_next_exercise_text);
+        up_next_exercise_text.setOnClickListener(view -> showUpNextExercise());
 
         timer.start();
 
@@ -135,6 +134,8 @@ public class WorkoutTracking extends MainActivity {
                     public void run() {
                         String currentExerciseInfo = exercisesFromWorkout.get(0).getName() + ":\n" + "Sets: " + exercises.get(0).getSets() + "\nReps: " + exercises.get(0).getReps();
                         current_exercise_text.setText(currentExerciseInfo);
+                        String upNextExerciseInfo = exercisesFromWorkout.get(1).getName() + ":\n" + "Sets: " + exercises.get(1).getSets() + "\nReps: " + exercises.get(1).getReps();
+                        up_next_exercise_text.setText(upNextExerciseInfo);
                     }
                 });
 
