@@ -8,7 +8,7 @@
     <TextView
         android:id="@+id/up_next_exercise_text"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:background="#ECECEC"
         android:gravity="center"
         android:text="Up next exercise"
