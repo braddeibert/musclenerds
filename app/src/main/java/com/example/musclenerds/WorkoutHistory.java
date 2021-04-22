@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 /**
@@ -15,7 +17,7 @@ import android.widget.EditText;
  * Use the {@link WorkoutHistory#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WorkoutHistory extends Fragment {
+public class WorkoutHistory extends Fragment implements View.OnClickListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +28,8 @@ public class WorkoutHistory extends Fragment {
     //  arameters
     private String mParam1;
     private String mParam2;
+
+    Button button;
 
     public WorkoutHistory() {
         // Required empty public constructor
@@ -70,10 +74,31 @@ public class WorkoutHistory extends Fragment {
 
     }
 
+    public void replaceFragment(Fragment f) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.calender, f);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_workout_history, container, false);
+        View v = inflater.inflate(R.layout.fragment_workout_history, container, false);
+        button = v.findViewById(R.id.viewWorkout);
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TrackedWorkout t = new TrackedWorkout();
+                replaceFragment(t);
+            }
+        });
+        return v;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
