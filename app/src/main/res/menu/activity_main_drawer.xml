@@ -17,10 +17,7 @@
             android:id="@+id/drawer_exercises"
             android:icon="@drawable/ic_library"
             android:title="@string/menu_exercises" />
-        <item
-            android:id="@+id/drawer_tracking"
-            android:icon="@drawable/ic_fitness"
-            android:title="@string/menu_tracking" />
+
         <item
             android:id="@+id/drawer_history"
             android:icon="@drawable/ic_calendar"

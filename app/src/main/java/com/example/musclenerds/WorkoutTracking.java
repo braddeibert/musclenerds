@@ -27,10 +27,8 @@ import android.widget.TextView;
 import com.example.musclenerds.database.AppDatabase;
 import com.example.musclenerds.database.AppExecutors;
 import com.example.musclenerds.model.Exercise;
-import com.example.musclenerds.model.Workout;
 import com.example.musclenerds.model.WorkoutExercise;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +66,6 @@ public class WorkoutTracking extends MainActivity {
         timer = findViewById(R.id.timer);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
         BottomNavigationView bottomNavView = findViewById(R.id.bottom_navigation_view);
 
         weightDialog = findViewById(R.id.weightDialog);
@@ -89,13 +86,9 @@ public class WorkoutTracking extends MainActivity {
         timer.start();
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.drawer_home, R.id.drawer_workouts, R.id.drawer_exercises, R.id.drawer_tracking, R.id.drawer_history)
+                R.id.drawer_home, R.id.drawer_workouts, R.id.drawer_exercises, R.id.drawer_history)
                 .setDrawerLayout(drawer)
                 .build();
-        //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        //NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        //NavigationUI.setupWithNavController(navigationView, navController);
-        //NavigationUI.setupWithNavController(bottomNavView, navController);
 
         bottomNavView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()){
