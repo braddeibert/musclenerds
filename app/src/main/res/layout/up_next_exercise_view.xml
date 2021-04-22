@@ -7,9 +7,12 @@
 
     <TextView
         android:id="@+id/up_next_exercise_text"
-        android:layout_width="184dp"
-        android:layout_height="93dp"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#ECECEC"
+        android:gravity="center"
         android:text="Up next exercise"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

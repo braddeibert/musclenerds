@@ -42,8 +42,7 @@ public class WorkoutTracking extends MainActivity {
     public AppBarConfiguration mAppBarConfiguration;
     private AppDatabase mDb; // make a reference to the database.
 
-    Button weightDialog;
-    Button repsDialog;
+    Button weightDialog, repsDialog, nextButton, prevButton;
     TextView weightDisplay;
     TextView repsDisplay;
     int weightCount = 0;
@@ -81,6 +80,12 @@ public class WorkoutTracking extends MainActivity {
 
         up_next_exercise_text = findViewById(R.id.up_next_exercise_text);
         up_next_exercise_text.setOnClickListener(view -> showUpNextExercise());
+
+        nextButton = findViewById(R.id.nextButton);
+        nextButton.setOnClickListener(view -> nextExercise());
+
+        prevButton = findViewById(R.id.prevButton);
+        prevButton.setOnClickListener(view -> prevExercise());
 
         timer.start();
 
@@ -129,6 +134,8 @@ public class WorkoutTracking extends MainActivity {
                     exercisesFromWorkout.add(mDb.exerciseDAO().findById(exercises.get(i).getE_ID()));
                 }
 
+                exercisesFromWorkout.get(0);
+
                 new Handler(Looper.getMainLooper()).post(new Runnable(){
                     @Override
                     public void run() {
@@ -141,6 +148,14 @@ public class WorkoutTracking extends MainActivity {
 
             }
         });
+
+    }
+
+    private void nextExercise() {
+        
+    }
+
+    private void prevExercise() {
 
     }
 

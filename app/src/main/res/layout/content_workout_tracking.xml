@@ -19,7 +19,7 @@
         layout="@layout/current_exercise_view"
         android:layout_width="367dp"
         android:layout_height="115dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/weightDialog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -31,10 +31,10 @@
         android:layout_height="113dp"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.434"
+        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.194" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <Chronometer
         android:id="@+id/timer"
@@ -51,7 +51,7 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="4dp"
         android:text="Up Next:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
