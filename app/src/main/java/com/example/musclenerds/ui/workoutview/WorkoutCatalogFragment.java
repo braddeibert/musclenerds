@@ -39,15 +39,6 @@ public class WorkoutCatalogFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // fetch workout dao for accessing data, get all exercises from it
-        AsyncTask.execute(new Runnable() {
-              @Override
-              public void run() {
-                  allWorkouts = AppDatabase.getInstance(getContext()).workoutDAO().getAll();
-              }
-          }
-        );
     }
 
     @Override
@@ -62,10 +53,19 @@ public class WorkoutCatalogFragment extends Fragment {
         // elements are laid out.
         mLayoutManager = new LinearLayoutManager(getActivity());
 
-        mAdapter = new WorkoutAdapter(allWorkouts);
+        // fetch workout dao for accessing data, get all exercises from it
+        AsyncTask.execute(new Runnable() {
+              @Override
+              public void run() {
+                  allWorkouts = AppDatabase.getInstance(getContext()).workoutDAO().getAll();
 
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                  mAdapter = new WorkoutAdapter(allWorkouts);
+
+                  mRecyclerView.setAdapter(mAdapter);
+                  mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+              }
+          }
+        );
 
         return rootView;
     }
