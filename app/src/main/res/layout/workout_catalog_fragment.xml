@@ -13,4 +13,3 @@ android:id="@+id/workout_catalog_view">
     android:layout_height="match_parent" />
 
 </FrameLayout>
-
