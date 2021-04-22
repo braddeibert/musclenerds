@@ -1,5 +1,6 @@
 package com.example.musclenerds.ui.workoutview;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -11,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.musclenerds.MainActivity;
 import com.example.musclenerds.R;
+import com.example.musclenerds.WorkoutTracking;
 import com.example.musclenerds.model.Workout;
 
 import org.w3c.dom.Text;
@@ -45,6 +48,8 @@ public class WorkoutFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // launch tracking activity with the workout here
+                Intent intent = new Intent(getContext(), WorkoutTracking.class);
+                startActivity(intent);
             }
         });
 
