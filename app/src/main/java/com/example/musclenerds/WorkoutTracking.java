@@ -48,8 +48,11 @@ public class WorkoutTracking extends MainActivity {
     SeekBar difficulty;
     int weightCount = 0;
     int repsCount = 0;
-    int currentExercise;
+    private int currentExerciseIndex = 0;
     private int workoutId;
+
+    private List<Exercise> workoutExercises;
+    private List<WorkoutExercise> linkedExercises;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -125,23 +128,18 @@ public class WorkoutTracking extends MainActivity {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                List<WorkoutExercise> exercises = mDb.workoutExerciseDAO().findByW_ID(workoutId);
-                Log.d("size_log", "" + exercises);
+                linkedExercises = mDb.workoutExerciseDAO().findByW_ID(workoutId);
+                Log.d("size_log", "" + linkedExercises);
 
-                List<Exercise> exercisesFromWorkout = new ArrayList<>();
-                for (int i = 0; i < exercises.size(); i++) {
-                    exercisesFromWorkout.add(mDb.exerciseDAO().findById(exercises.get(i).getE_ID()));
+                workoutExercises = new ArrayList<>();
+                for (int i = 0; i < linkedExercises.size(); i++) {
+                    workoutExercises.add(mDb.exerciseDAO().findById(linkedExercises.get(i).getE_ID()));
                 }
-
-                exercisesFromWorkout.get(0);
 
                 new Handler(Looper.getMainLooper()).post(new Runnable(){
                     @Override
                     public void run() {
-                        String currentExerciseInfo = exercisesFromWorkout.get(0).getName() + ":\n" + "Sets: " + exercises.get(0).getSets() + "\nReps: " + exercises.get(0).getReps();
-                        current_exercise_text.setText(currentExerciseInfo);
-                        String upNextExerciseInfo = exercisesFromWorkout.get(1).getName() + ":\n" + "Sets: " + exercises.get(1).getSets() + "\nReps: " + exercises.get(1).getReps();
-                        up_next_exercise_text.setText(upNextExerciseInfo);
+                        updateExercise();
                     }
                 });
 
@@ -181,12 +179,33 @@ public class WorkoutTracking extends MainActivity {
 
     }
 
-    private void nextExercise() {
+    private void updateExercise() {
+        String currentExerciseInfo = workoutExercises.get(currentExerciseIndex).getName() + ":\n" + "Sets: " + linkedExercises.get(currentExerciseIndex).getSets() + "\nReps: " + linkedExercises.get(currentExerciseIndex).getReps();
+        current_exercise_text.setText(currentExerciseInfo);
 
+        if (currentExerciseIndex + 1 < workoutExercises.size()) {
+            String upNextExerciseInfo = workoutExercises.get(currentExerciseIndex + 1).getName() + ":\n" + "Sets: " + linkedExercises.get(currentExerciseIndex + 1).getSets() + "\nReps: " + linkedExercises.get(currentExerciseIndex + 1).getReps();
+            up_next_exercise_text.setText(upNextExerciseInfo);
+        }
+        else {
+            up_next_exercise_text.setText("Workout complete!");
+        }
+    }
+
+    private void nextExercise() {
+        if (currentExerciseIndex + 1 < workoutExercises.size()) {
+            currentExerciseIndex++;
+        }
+
+        updateExercise();
     }
 
     private void prevExercise() {
+        if (currentExerciseIndex > 0) {
+            currentExerciseIndex--;
+        }
 
+        updateExercise();
     }
 
     @Override
@@ -386,7 +405,7 @@ public class WorkoutTracking extends MainActivity {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                Exercise exercise =  mDb.exerciseDAO().findById(currentExercise);
+                Exercise exercise =  mDb.exerciseDAO().findById(currentExerciseIndex);
                 //List<WorkoutExercise> workoutExercises = mDb.workoutExerciseDAO().findByW_ID(allExercises.get(1).getId());
                 Log.d("size_log", "id: " + exercise.getName());
                 final String cName = exercise.getName();
@@ -423,7 +442,7 @@ public class WorkoutTracking extends MainActivity {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                Exercise exercise =  mDb.exerciseDAO().findById(currentExercise + 1);
+                Exercise exercise =  mDb.exerciseDAO().findById(currentExerciseIndex + 1);
                 Log.d("size_log", "id: " + exercise);
                 final String uNName = exercise.getName();
                 final String uNDesc = exercise.getDescription();
