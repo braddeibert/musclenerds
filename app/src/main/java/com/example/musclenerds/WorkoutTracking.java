@@ -20,6 +20,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 
@@ -43,13 +44,11 @@ public class WorkoutTracking extends MainActivity {
     private AppDatabase mDb; // make a reference to the database.
 
     Button weightDialog, repsDialog, nextButton, prevButton;
-    TextView weightDisplay;
-    TextView repsDisplay;
+    TextView weightDisplay, repsDisplay, current_exercise_text, up_next_exercise_text;
+    SeekBar difficulty;
     int weightCount = 0;
     int repsCount = 0;
-    TextView current_exercise_text;
-    TextView up_next_exercise_text;
-    int currentExercise = 1;
+    int currentExercise;
     private int workoutId;
 
     @SuppressLint("NonConstantResourceId")
@@ -149,10 +148,41 @@ public class WorkoutTracking extends MainActivity {
             }
         });
 
+        SeekBar difficulty = findViewById(R.id.seekBar);
+        difficulty.setProgress(0);
+        difficulty.incrementProgressBy(1);
+        difficulty.setMax(10);
+        TextView difficultyValue = findViewById(R.id.difficultyValue);
+
+        difficulty.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(fromUser) {
+                    if (progress >= 0 && progress <= 10) {
+
+                        String progressString = String.valueOf(progress);
+                        difficultyValue.setText(progressString);
+                        difficulty.setSecondaryProgress(progress);
+                    }
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
     }
 
     private void nextExercise() {
-        
+
     }
 
     private void prevExercise() {
