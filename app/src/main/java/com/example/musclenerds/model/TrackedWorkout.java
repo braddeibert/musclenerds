@@ -3,6 +3,7 @@ package com.example.musclenerds.model;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import java.util.Calendar;
 
 @Entity(tableName = "TRACKEDWORKOUT")
 public class TrackedWorkout {
@@ -48,5 +49,8 @@ public class TrackedWorkout {
 
     public String getDateCompleted() {
         return this.DateCompleted;
+    }
+    public void setDateCompleted(String milliseconds){
+        this.DateCompleted = milliseconds;
     }
 }

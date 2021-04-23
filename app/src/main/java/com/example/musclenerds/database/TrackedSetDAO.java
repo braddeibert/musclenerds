@@ -27,4 +27,7 @@ public interface TrackedSetDAO {
 
     @Query("SELECT * FROM TRACKEDSET WHERE id = :id")
     TrackedSet findById(int id);
+
+    @Query("SELECT * FROM TRACKEDSET WHERE T_ID = :id")
+    List <TrackedSet> findByT_ID(int id);
 }
