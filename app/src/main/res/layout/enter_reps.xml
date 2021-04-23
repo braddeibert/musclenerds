@@ -91,6 +91,7 @@
         android:layout_height="30dp"
         android:text="@string/enter_reps"
         android:textAllCaps="true"
+        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/r_5"
         app:layout_constraintEnd_toEndOf="parent"
