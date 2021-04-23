@@ -94,9 +94,10 @@ public class WorkoutTracking extends MainActivity {
         up_next_exercise_text = findViewById(R.id.up_next_exercise_text);
         up_next_exercise_text.setOnClickListener(view -> {
             if (currentExerciseIndex + 1 == workoutExercises.size()) {
-                System.out.println("before submitting data");
                 submitData();
-                System.out.println("data submitted");
+                Intent done = new Intent(WorkoutTracking.this, MainActivity.class);
+                startActivity(done);
+
                 return;
             }
 
@@ -213,7 +214,6 @@ public class WorkoutTracking extends MainActivity {
         ArrayList<TrackedSet> allSets = new ArrayList<TrackedSet>();
         for (int i = 0; i < workoutExercises.size(); i++) {
             for (String[] data : setData.get(i)) {
-
                 try {
                     TrackedSet curr = new TrackedSet(workoutExercises.get(i).getId(), workout.getId(), Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]), "fake");
                     allSets.add(curr);
@@ -255,8 +255,6 @@ public class WorkoutTracking extends MainActivity {
         String weightNum = weightDisplay.getText().toString();
 
         if (numReps.length() > 0 && weightNum.length() > 0) {
-            System.out.println(numReps + " yeet " + weightNum);
-
             setData.get(currentExerciseIndex).set(currentSetIndex, new String[]
                     { numReps, weightNum, String.valueOf(difficulty.getProgress())}
             );
