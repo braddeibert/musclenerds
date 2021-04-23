@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -26,11 +27,11 @@ import android.widget.TextView;
 
 import com.example.musclenerds.database.AppDatabase;
 import com.example.musclenerds.database.AppExecutors;
-import com.example.musclenerds.model.Exercise;
-import com.example.musclenerds.model.WorkoutExercise;
+import com.example.musclenerds.model.*;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class WorkoutTracking extends MainActivity {
@@ -91,7 +92,16 @@ public class WorkoutTracking extends MainActivity {
         current_exercise_text.setOnClickListener(view -> showCurrentExercise());
 
         up_next_exercise_text = findViewById(R.id.up_next_exercise_text);
-        up_next_exercise_text.setOnClickListener(view -> showUpNextExercise());
+        up_next_exercise_text.setOnClickListener(view -> {
+            if (currentExerciseIndex + 1 == workoutExercises.size()) {
+                System.out.println("before submitting data");
+                submitData();
+                System.out.println("data submitted");
+                return;
+            }
+
+            showUpNextExercise();
+        });
 
         nextButton = findViewById(R.id.nextButton);
         nextButton.setOnClickListener(view -> nextExercise());
@@ -193,6 +203,42 @@ public class WorkoutTracking extends MainActivity {
         });
     }
 
+    private void submitData() {
+        long currTimeInMillis = Calendar.getInstance().getTimeInMillis();
+
+        // create TrackedWorkout for this workout
+        TrackedWorkout workout = new TrackedWorkout(workoutId, 30, String.valueOf(currTimeInMillis));
+
+        // create and store TrackedSet for each item in setData
+        ArrayList<TrackedSet> allSets = new ArrayList<TrackedSet>();
+        for (int i = 0; i < workoutExercises.size(); i++) {
+            for (String[] data : setData.get(i)) {
+
+                try {
+                    TrackedSet curr = new TrackedSet(workoutExercises.get(i).getId(), workout.getId(), Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]), "fake");
+                    allSets.add(curr);
+                }
+                catch (Exception e) {
+                    System.out.println("Bad set");
+                }
+            }
+        }
+
+        // insert TrackedWorkout and TrackedSets into the db
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb = AppDatabase.getInstance(getBaseContext());
+                mDb.trackedWorkoutDAO().insert(workout);
+
+                for (TrackedSet set : allSets) {
+                    mDb.trackedSetDAO().insert(set);
+                }
+            }
+        });
+
+    }
+
     private void initSetData() {
         for (int i = 0; i < workoutExercises.size(); i++) {
             String[] data = new String[3];
@@ -205,11 +251,18 @@ public class WorkoutTracking extends MainActivity {
     }
 
     private void updateSet() {
-        setData.get(currentExerciseIndex).set(currentSetIndex, new String[]
-                { repsDisplay.getText().toString(), weightDisplay.getText().toString(), String.valueOf(difficulty.getProgress())}
-        );
+        String numReps = repsDisplay.getText().toString();
+        String weightNum = weightDisplay.getText().toString();
 
-        setsDisplay.setText("Set: " + String.valueOf(currentSetIndex + 1));
+        if (numReps.length() > 0 && weightNum.length() > 0) {
+            System.out.println(numReps + " yeet " + weightNum);
+
+            setData.get(currentExerciseIndex).set(currentSetIndex, new String[]
+                    { numReps, weightNum, String.valueOf(difficulty.getProgress())}
+            );
+
+            setsDisplay.setText("Set: " + String.valueOf(currentSetIndex + 1));
+        }
     }
 
     private void nextSet() {
