@@ -43,16 +43,23 @@ public class WorkoutTracking extends MainActivity {
     public AppBarConfiguration mAppBarConfiguration;
     private AppDatabase mDb; // make a reference to the database.
 
-    Button weightDialog, repsDialog, nextButton, prevButton;
-    TextView weightDisplay, repsDisplay, current_exercise_text, up_next_exercise_text;
+    Button weightDialog, repsDialog, trackSetButton, nextButton, prevButton;
+    TextView weightDisplay, repsDisplay, setsDisplay, current_exercise_text, up_next_exercise_text;
     SeekBar difficulty;
     int weightCount = 0;
     int repsCount = 0;
     private int currentExerciseIndex = 0;
+    private int currentSetIndex = 0;
     private int workoutId;
 
+    // these lists contain the exercises in the workout currently being tracked, and the sets x reps for those exercises
     private List<Exercise> workoutExercises;
     private List<WorkoutExercise> linkedExercises;
+
+    // these lists maintain references to the reps & weight for each set of each exercise, indexed by exercise.
+    // i.e. reps[0] = list of repetitions tracked for each set of the 1st exercise in the workout, and v.v. for weights
+    private List<List<String>> reps;
+    private List<List<String>> weights;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -73,6 +80,9 @@ public class WorkoutTracking extends MainActivity {
 
         repsDialog = findViewById(R.id.repsDialog);
         repsDisplay = findViewById(R.id.repsDisplay);
+
+        setsDisplay = findViewById(R.id.tvSets);
+        trackSetButton = findViewById(R.id.trackSetButton);
 
         weightDialog.setOnClickListener(view -> showWeightDialog());
         repsDialog.setOnClickListener(view -> showRepsDialog());
@@ -146,6 +156,8 @@ public class WorkoutTracking extends MainActivity {
             }
         });
 
+
+
         SeekBar difficulty = findViewById(R.id.seekBar);
         difficulty.setProgress(0);
         difficulty.incrementProgressBy(1);
@@ -195,6 +207,7 @@ public class WorkoutTracking extends MainActivity {
             currentExerciseIndex++;
         }
 
+        currentSetIndex = 0;
         updateExercise();
     }
 
@@ -203,6 +216,7 @@ public class WorkoutTracking extends MainActivity {
             currentExerciseIndex--;
         }
 
+        currentSetIndex = 0;
         updateExercise();
     }
 
