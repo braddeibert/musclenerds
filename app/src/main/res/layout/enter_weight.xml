@@ -82,6 +82,7 @@
         android:layout_height="37dp"
         android:text="@string/enter_weight"
         android:textAllCaps="true"
+        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/w_25"
         app:layout_constraintEnd_toEndOf="parent"
