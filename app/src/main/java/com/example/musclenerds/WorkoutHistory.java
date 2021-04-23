@@ -195,7 +195,6 @@ public class WorkoutHistory extends Fragment {
             public void run() {
                 int year = 2021;
                 int month = 3;
-                List<TrackedWorkout> allWorkouts = mDb.trackedWorkoutDAO().getAll()
                     for(int day = 1; day < 30; day++) {
                         Date currDate = new Date(year, month, day);
                         long currTime = currDate.getTime();
