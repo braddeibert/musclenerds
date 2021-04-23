@@ -52,18 +52,12 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="192dp"
-        android:layout_marginLeft="192dp"
-        android:layout_marginTop="329dp"
-        android:layout_marginEnd="166dp"
-        android:layout_marginRight="166dp"
-        android:layout_marginBottom="255dp"
+        android:layout_marginTop="60dp"
         android:text="Up Next:"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/weightDisplay" />
 
     <Button
         android:id="@+id/weightDialog"
