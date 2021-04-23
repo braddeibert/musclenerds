@@ -175,8 +175,6 @@ public class WorkoutTracking extends MainActivity {
 
             }
         });
-
-
     }
 
     private void updateExercise() {
@@ -405,8 +403,7 @@ public class WorkoutTracking extends MainActivity {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                Exercise exercise =  mDb.exerciseDAO().findById(currentExerciseIndex);
-                //List<WorkoutExercise> workoutExercises = mDb.workoutExerciseDAO().findByW_ID(allExercises.get(1).getId());
+                Exercise exercise =  workoutExercises.get(currentExerciseIndex);
                 Log.d("size_log", "id: " + exercise.getName());
                 final String cName = exercise.getName();
                 final String cDesc = exercise.getDescription();
@@ -442,21 +439,23 @@ public class WorkoutTracking extends MainActivity {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                Exercise exercise =  mDb.exerciseDAO().findById(currentExerciseIndex + 1);
-                Log.d("size_log", "id: " + exercise);
-                final String uNName = exercise.getName();
-                final String uNDesc = exercise.getDescription();
-                final String uNType = exercise.getType();
+                if (currentExerciseIndex + 1 < workoutExercises.size()) {
+                    Exercise exercise =  workoutExercises.get(currentExerciseIndex + 1);
+                    Log.d("size_log", "id: " + exercise);
+                    final String uNName = exercise.getName();
+                    final String uNDesc = exercise.getDescription();
+                    final String uNType = exercise.getType();
 
-                new Handler(Looper.getMainLooper()).post(new Runnable(){
-                    @Override
-                    public void run() {
-                        upNextName.setText(uNName);
-                        upNextDescription.setText(uNDesc);
-                        upNextType.setText(uNType);
+                    new Handler(Looper.getMainLooper()).post(new Runnable(){
+                        @Override
+                        public void run() {
+                            upNextName.setText(uNName);
+                            upNextDescription.setText(uNDesc);
+                            upNextType.setText(uNType);
 
-                    }
-                });
+                        }
+                    });
+                }
             }
         });
 
