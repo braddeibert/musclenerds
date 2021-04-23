@@ -1,5 +1,6 @@
 package com.example.musclenerds.ui.home;
 
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,12 +21,16 @@ import com.example.musclenerds.database.AppDatabase;
 import com.example.musclenerds.database.AppExecutors;
 import com.example.musclenerds.model.Exercise;
 import com.example.musclenerds.model.MotivationalQuote;
+import com.example.musclenerds.model.TrackedSet;
+import com.example.musclenerds.model.TrackedWorkout;
 import com.example.musclenerds.model.Workout;
 import com.example.musclenerds.model.WorkoutExercise;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
+import java.util.Date;
 
 public class HomeFragment extends Fragment {
 
@@ -41,6 +46,7 @@ public class HomeFragment extends Fragment {
         final TextView textView = root.findViewById(R.id.greeting_label);
         final TextView quoteView = root.findViewById(R.id.textView5);
         final TextView wotd = root.findViewById(R.id.textView3);
+        final TextView lastWorkoutHighlights = root.findViewById(R.id.textView4);
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -100,6 +106,76 @@ public class HomeFragment extends Fragment {
                 });
             }
         });
+
+        //Tracked workout thread below
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                //create and insert test "TrackedWorkout" data
+                Calendar testDate = Calendar.getInstance();
+                TrackedWorkout testWorkoutData1 = new TrackedWorkout(1,3,60,String.valueOf(testDate.getTimeInMillis()-100000000));
+                TrackedWorkout testWorkoutData2 = new TrackedWorkout(2,3,90,String.valueOf(testDate.getTimeInMillis()-1111111111));
+                System.out.println(testWorkoutData1.getDuration()+ " | This is the test value for testWorkoutData1's duration");
+                mDb.trackedWorkoutDAO().insert(testWorkoutData1);
+                mDb.trackedWorkoutDAO().insert(testWorkoutData2);
+
+                //get latest TrackedWorkout
+                TrackedWorkout latestWorkout = mDb.trackedWorkoutDAO().getLatest().get(0);
+
+                //create and insert test "TrackedSet" data for the above "TrackedWorkoutData1"
+                TrackedSet testTrackedSet1 = new TrackedSet(1,3,1,5,60,5,String.valueOf(60));
+                TrackedSet testTrackedSet2 = new TrackedSet(2,3,1,10,20,7,String.valueOf(60));
+                mDb.trackedSetDAO().insert(testTrackedSet1);
+                mDb.trackedSetDAO().insert(testTrackedSet2);
+
+                //get list of TrackedSets from TrackedWorkout
+                List<TrackedSet> latestWorkoutTrackedSetList = mDb.trackedSetDAO().findByT_ID(latestWorkout.getId());
+
+                //create string for insertion onto LastWorkoutHighlights in HomeFragment
+                String workoutName = mDb.workoutDAO().findById(latestWorkout.getId()).getName();
+                String workoutDescription = mDb.workoutDAO().findById(latestWorkout.getId()).getDescription();
+                Calendar conversionCalendar = Calendar.getInstance();
+                conversionCalendar.setTimeInMillis(Long.parseLong((latestWorkout.getDateCompleted())));
+                long workoutDate = Long.parseLong(latestWorkout.getDateCompleted());
+                conversionCalendar.setTimeInMillis(workoutDate);
+
+                String lwhText = "Workout: " + workoutName + "\n" + workoutDescription + "\n" + conversionCalendar.getTime(); //still needs date
+                //System.out.println(lwhText);
+
+                //get most difficult exercise
+                TrackedSet mostDifficultTrackedSet = latestWorkoutTrackedSetList.get(0);
+                for (int i=0; i < latestWorkoutTrackedSetList.size(); i++){
+                    if(latestWorkoutTrackedSetList.get(i).getDifficulty()>mostDifficultTrackedSet.getDifficulty()){
+                        mostDifficultTrackedSet = latestWorkoutTrackedSetList.get(i);
+                    }
+                }
+                lwhText = lwhText +
+                        "\n\n"+
+                        "Exercise: " + mDb.exerciseDAO().findById(mostDifficultTrackedSet.getE_ID()).getName()+
+                        "\nWeight: " + mostDifficultTrackedSet.getWeight()+
+                        "\nReps: " + mostDifficultTrackedSet.getReps()+
+                        "\nDifficulty: " + mostDifficultTrackedSet.getDifficulty();
+
+                final String lwhFinalText = lwhText;
+
+                new Handler(Looper.getMainLooper()).post(new Runnable(){
+                    @Override
+                    public void run() {
+                        lastWorkoutHighlights.setText(lwhFinalText);
+                    }
+                });
+
+
+
+
+            }
+        });
         return root;
+
+        //Tracked workout code below
+
+
+
     }
 }
