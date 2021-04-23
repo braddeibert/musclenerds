@@ -43,16 +43,23 @@ public class WorkoutTracking extends MainActivity {
     public AppBarConfiguration mAppBarConfiguration;
     private AppDatabase mDb; // make a reference to the database.
 
-    Button weightDialog, repsDialog, nextButton, prevButton;
-    TextView weightDisplay, repsDisplay, current_exercise_text, up_next_exercise_text;
     SeekBar difficulty;
+    Button weightDialog, repsDialog, trackSetButton, nextButton, prevButton;
+    TextView weightDisplay, repsDisplay, setsDisplay, current_exercise_text, up_next_exercise_text;
     int weightCount = 0;
     int repsCount = 0;
     private int currentExerciseIndex = 0;
+    private int currentSetIndex = 0;
     private int workoutId;
 
+    // these lists contain the exercises in the workout currently being tracked, and the sets x reps for those exercises
     private List<Exercise> workoutExercises;
     private List<WorkoutExercise> linkedExercises;
+
+    // these lists maintain references to the reps & weight for each set of each exercise, indexed by exercise.
+    // i.e. setData[0] = list of data tracked for sets of 0th exercise
+    // setData[0][0] = [ reps, weight, difficulty ]
+    private List<List<String[]>> setData = new ArrayList<List<String[]>>();
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -73,6 +80,9 @@ public class WorkoutTracking extends MainActivity {
 
         repsDialog = findViewById(R.id.repsDialog);
         repsDisplay = findViewById(R.id.repsDisplay);
+
+        setsDisplay = findViewById(R.id.tvSets);
+        trackSetButton = findViewById(R.id.trackSetButton);
 
         weightDialog.setOnClickListener(view -> showWeightDialog());
         repsDialog.setOnClickListener(view -> showRepsDialog());
@@ -124,29 +134,7 @@ public class WorkoutTracking extends MainActivity {
             workoutId = extras.getInt("workoutId");
         }
 
-        AppDatabase mDb = AppDatabase.getInstance(getBaseContext());
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                linkedExercises = mDb.workoutExerciseDAO().findByW_ID(workoutId);
-                Log.d("size_log", "" + linkedExercises);
-
-                workoutExercises = new ArrayList<>();
-                for (int i = 0; i < linkedExercises.size(); i++) {
-                    workoutExercises.add(mDb.exerciseDAO().findById(linkedExercises.get(i).getE_ID()));
-                }
-
-                new Handler(Looper.getMainLooper()).post(new Runnable(){
-                    @Override
-                    public void run() {
-                        updateExercise();
-                    }
-                });
-
-            }
-        });
-
-        SeekBar difficulty = findViewById(R.id.seekBar);
+        difficulty = findViewById(R.id.seekBar);
         difficulty.setProgress(0);
         difficulty.incrementProgressBy(1);
         difficulty.setMax(10);
@@ -175,6 +163,71 @@ public class WorkoutTracking extends MainActivity {
 
             }
         });
+
+        trackSetButton.setOnClickListener((v) -> {
+            nextSet();
+        });
+
+        AppDatabase mDb = AppDatabase.getInstance(getBaseContext());
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                linkedExercises = mDb.workoutExerciseDAO().findByW_ID(workoutId);
+                Log.d("size_log", "" + linkedExercises);
+
+                workoutExercises = new ArrayList<>();
+                for (int i = 0; i < linkedExercises.size(); i++) {
+                    workoutExercises.add(mDb.exerciseDAO().findById(linkedExercises.get(i).getE_ID()));
+                }
+
+                new Handler(Looper.getMainLooper()).post(new Runnable(){
+                    @Override
+                    public void run() {
+                        initSetData();
+                        updateExercise();
+                        updateSet();
+                    }
+                });
+
+            }
+        });
+    }
+
+    private void initSetData() {
+        for (int i = 0; i < workoutExercises.size(); i++) {
+            String[] data = new String[3];
+            setData.add(new ArrayList<String[]>());
+
+            for (int j = 0; j < linkedExercises.get(i).getSets(); j++) {
+                setData.get(i).add(data);
+            }
+        }
+    }
+
+    private void updateSet() {
+        setData.get(currentExerciseIndex).set(currentSetIndex, new String[]
+                { repsDisplay.getText().toString(), weightDisplay.getText().toString(), String.valueOf(difficulty.getProgress())}
+        );
+
+        setsDisplay.setText("Set: " + String.valueOf(currentSetIndex + 1));
+    }
+
+    private void nextSet() {
+        if (currentSetIndex + 1 == linkedExercises.get(currentExerciseIndex).getSets() && currentExerciseIndex + 1 == workoutExercises.size()) {
+            return;
+        }
+
+        if (currentSetIndex + 1 < linkedExercises.get(currentExerciseIndex).getSets()) {
+            currentSetIndex++;
+        }
+        else {
+            currentSetIndex = 0;
+
+            nextExercise();
+            updateExercise();
+        }
+
+        updateSet();
     }
 
     private void updateExercise() {
@@ -195,7 +248,9 @@ public class WorkoutTracking extends MainActivity {
             currentExerciseIndex++;
         }
 
+        currentSetIndex = 0;
         updateExercise();
+        updateSet();
     }
 
     private void prevExercise() {
@@ -203,7 +258,9 @@ public class WorkoutTracking extends MainActivity {
             currentExerciseIndex--;
         }
 
+        currentSetIndex = 0;
         updateExercise();
+        updateSet();
     }
 
     @Override
