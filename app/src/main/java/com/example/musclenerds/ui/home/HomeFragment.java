@@ -122,6 +122,7 @@ public class HomeFragment extends Fragment {
 
                 //get latest TrackedWorkout
                 TrackedWorkout latestWorkout = mDb.trackedWorkoutDAO().getLatest().get(0);
+                if(latestWorkout == null) return;
 
                 //create and insert test "TrackedSet" data for the above "TrackedWorkoutData1"
                 TrackedSet testTrackedSet1 = new TrackedSet(1,3,1,5,60,5,String.valueOf(60));
@@ -133,8 +134,8 @@ public class HomeFragment extends Fragment {
                 List<TrackedSet> latestWorkoutTrackedSetList = mDb.trackedSetDAO().findByT_ID(latestWorkout.getId());
 
                 //create string for insertion onto LastWorkoutHighlights in HomeFragment
-                String workoutName = mDb.workoutDAO().findById(latestWorkout.getId()).getName();
-                String workoutDescription = mDb.workoutDAO().findById(latestWorkout.getId()).getDescription();
+                String workoutName = mDb.workoutDAO().findById(latestWorkout.getW_ID()).getName();
+                String workoutDescription = mDb.workoutDAO().findById(latestWorkout.getW_ID()).getDescription();
                 Calendar conversionCalendar = Calendar.getInstance();
                 conversionCalendar.setTimeInMillis(Long.parseLong((latestWorkout.getDateCompleted())));
                 long workoutDate = Long.parseLong(latestWorkout.getDateCompleted());
@@ -144,6 +145,7 @@ public class HomeFragment extends Fragment {
                 //System.out.println(lwhText);
 
                 //get most difficult exercise
+                /*
                 TrackedSet mostDifficultTrackedSet = latestWorkoutTrackedSetList.get(0);
                 for (int i=0; i < latestWorkoutTrackedSetList.size(); i++){
                     if(latestWorkoutTrackedSetList.get(i).getDifficulty()>mostDifficultTrackedSet.getDifficulty()){
@@ -156,6 +158,8 @@ public class HomeFragment extends Fragment {
                         "\nWeight: " + mostDifficultTrackedSet.getWeight()+
                         "\nReps: " + mostDifficultTrackedSet.getReps()+
                         "\nDifficulty: " + mostDifficultTrackedSet.getDifficulty();
+                        
+                 */
 
                 final String lwhFinalText = lwhText;
 

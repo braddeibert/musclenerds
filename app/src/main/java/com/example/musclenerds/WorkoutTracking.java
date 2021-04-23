@@ -32,6 +32,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class WorkoutTracking extends MainActivity {
@@ -205,10 +206,12 @@ public class WorkoutTracking extends MainActivity {
     }
 
     private void submitData() {
-        long currTimeInMillis = Calendar.getInstance().getTimeInMillis();
+        Date currDate = new Date(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        long currTime = currDate.getTime();
+        String currtimeString = String.valueOf(currTime);
 
         // create TrackedWorkout for this workout
-        TrackedWorkout workout = new TrackedWorkout(workoutId, 30, String.valueOf(currTimeInMillis));
+        TrackedWorkout workout = new TrackedWorkout(workoutId, 30, currtimeString);
 
         // create and store TrackedSet for each item in setData
         ArrayList<TrackedSet> allSets = new ArrayList<TrackedSet>();
