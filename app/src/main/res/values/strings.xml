@@ -34,7 +34,7 @@
     <string name="w_5">+5</string>
     <string name="enter_weight">Weight:</string>
     <string name="weightDialogButton">Enter Weight</string>
-    <string name="weight_info">%1$s lbs</string>
+    <string name="weight_info">%1$s</string>
 
     <!-- Reps Dialog Strings -->
     <string name="r_1">+1</string>
@@ -43,7 +43,7 @@
     <string name="r_20">+20</string>
     <string name="enter_reps">Reps:</string>
     <string name="repsDialogButton">Enter Reps</string>
-    <string name="reps_info">%1$s reps</string>
+    <string name="reps_info">%1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
