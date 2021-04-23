@@ -49,4 +49,7 @@ public class TrackedWorkout {
     public String getDateCompleted() {
         return this.DateCompleted;
     }
+    public void setDateCompleted(String DateCompleted) {
+        this.DateCompleted = DateCompleted;
+    }
 }

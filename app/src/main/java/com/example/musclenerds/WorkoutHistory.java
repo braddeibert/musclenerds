@@ -6,16 +6,30 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.musclenerds.database.AppDatabase;
+import com.example.musclenerds.database.AppExecutors;
+import com.example.musclenerds.model.Exercise;
+import com.example.musclenerds.model.MotivationalQuote;
+import com.example.musclenerds.model.TrackedWorkout;
+import com.example.musclenerds.model.Workout;
+import com.example.musclenerds.model.WorkoutExercise;
 import com.example.musclenerds.ui.home.HomeViewModel;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -94,9 +108,50 @@ public class WorkoutHistory extends Fragment {
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int dayOfMonth) {
                 Log.d("cal_log", "time: " + dayOfMonth);
+                Date date = new Date(year, month, dayOfMonth);
+
+                Calendar converter = Calendar.getInstance();
+                converter.set(year, month, dayOfMonth);
+                long timeStamp = date.getTime();
+
+                date = new Date(year, month, dayOfMonth);
+                long testTimeStamp = date.getTime();
+
+                Log.d("cal_log", "time: " + timeStamp);
+                Log.d("cal_log", "test time: " + testTimeStamp);
+                String time = String.valueOf(timeStamp);
+                String testTime = String.valueOf(testTimeStamp);
+                Log.d("cal_log", "time: " + time);
+
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<TrackedWorkout> allDayWorkouts = mDb.trackedWorkoutDAO().findByDate(testTime);
+                        if(allDayWorkouts.size() < 1) {
+                            TrackedWorkout testworkout = new TrackedWorkout(1, 20, String.valueOf(testTimeStamp));
+                            mDb.trackedWorkoutDAO().insert(testworkout);
+                        }
+                        allDayWorkouts = mDb.trackedWorkoutDAO().findByDate(time);
+                        Log.d("cal_log", "size: " + allDayWorkouts.size());
+
+                        Log.d("cal_log", "workouts: " + allDayWorkouts.get(0).getDateCompleted());
+                        TextView workoutView = root.findViewById(R.id.WorkoutTextView);
+
+                        Workout curr_work = mDb.workoutDAO().findById(allDayWorkouts.get(0).getW_ID());
+
+                        final String workoutName = curr_work.getName() + "\n" + curr_work.getDescription();
+
+                        new Handler(Looper.getMainLooper()).post(new Runnable(){
+                            @Override
+                            public void run() {
+                                workoutView.setText(workoutName);
+
+                            }
+                        });
+                    }
+                });
             }
         });
-
         // Inflate the layout for this fragment
         return root;
     }

@@ -35,15 +35,6 @@
         tools:layout_conversion_absoluteHeight="63dp"
         tools:layout_conversion_absoluteWidth="57dp" />
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="325dp"
-        android:layout_height="135dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
@@ -53,5 +44,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+
+    <TextView
+        android:id="@+id/WorkoutTextView"
+        android:layout_width="377dp"
+        android:layout_height="58dp"
+        android:layout_marginBottom="103dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.185" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

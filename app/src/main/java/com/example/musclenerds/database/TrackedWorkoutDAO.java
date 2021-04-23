@@ -27,4 +27,7 @@ public interface TrackedWorkoutDAO {
 
     @Query("SELECT * FROM TRACKEDWORKOUT WHERE id = :id")
     TrackedWorkout findById(int id);
+
+    @Query("SELECT * FROM TRACKEDWORKOUT WHERE DateCompleted = :date ORDER BY DateCompleted ASC")
+    List<TrackedWorkout> findByDate(String date);
 }
