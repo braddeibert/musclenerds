@@ -5,7 +5,9 @@
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:windowBackground"
     tools:context=".ui.workoutview.WorkoutFragment">
+
 
     <TextView
         android:id="@+id/tvWorkoutName"
